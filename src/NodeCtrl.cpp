@@ -1,4 +1,5 @@
 #include "include/LockValue.h"
+#include "include/UnLockValue.h"
 #include "include/irisConfig.h"
 
 void ihelper_default();
@@ -31,7 +32,7 @@ auto opt_off() -> bool
 {
 	ihelper_default();
 	lock_val("", "/data/system/mcd/df");
-	lock_val(0, "/sys/module/perfmgr_mtk/parameters/perfmgr_enable");
-	lock_val(-1, "/sys/module/perfmgr_mtk/parameters/fixed_target_fps");
+	Unlock_val(0, "/sys/module/perfmgr_mtk/parameters/perfmgr_enable");
+	Unlock_val(-1, "/sys/module/perfmgr_mtk/parameters/fixed_target_fps");
 	return true;
 }
