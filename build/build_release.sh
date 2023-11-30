@@ -20,7 +20,8 @@ format_code() {
 }
 
 compile_start() {
-    local output=$project_root/Module/irisHelper
+    local output=$project_root/output/irisHelper
+    [ ! -d $(dirname $output) ] && mkdir -p $(dirname $output)
     local for_test=$project_root/Test/irisHelper
 
 	echo "当前时间：$(date +%Y) 年 $(date +%m) 月 $(date +%d) 日 $(date +%H) 时 $(date +%M) 分 $(date +%S) 秒"
@@ -37,7 +38,6 @@ compile_start() {
   $project_root/src/*.cpp -o $output && echo "*编译完成*" || exit 1
 
 	/data/data/com.termux/files/usr/bin/strip $output
-	# upx -9 project_root/irisHelper
 
 	cp -f $output $for_test
 	chmod +x $for_test
@@ -48,5 +48,5 @@ compile_start() {
 format_code
 compile_start
 remove_file 2>/dev/null
-ldd /data/data/com.termux/files/home/irisHelper/Module/irisHelper 2>/dev/null
+ldd $project_root/output/irisHelper 2>/dev/null
 exit 0
