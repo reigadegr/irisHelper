@@ -17,13 +17,18 @@ void GetSecondArg(std::string &buf)
 		buf.erase(0, pos + 1); // 删除空格和左边的所有内容
 	}
 }
-
+std::string oo = " ";
 void ihelper_default()
 {
-	std::system("/odm/bin/irisConfig \"47 1 0\"");
-	std::system("/odm/bin/irisConfig \"258 1 0\"");
-	std::system("/odm/bin/irisConfig \"267 2 3 0\"");
-	std::system("/odm/bin/irisConfig \"273 1 0\"");
+	std::system(
+		("/odm/bin/irisConfig \"47 1 0\"" + oo + "2>/dev/null").c_str());
+	std::system(("/odm/bin/irisConfig \"258 1 0\"" + oo + "2>/dev/null")
+			    .c_str());
+
+	std::system(("/odm/bin/irisConfig \"267 2 3 0\"" + oo + "2>/dev/null")
+			    .c_str());
+	std::system(("/odm/bin/irisConfig \"273 1 0\"" + oo + "2>/dev/null")
+			    .c_str());
 
 	lock_val("", "/data/system/mcd/df");
 	lock_val(0, "/sys/module/perfmgr_mtk/parameters/perfmgr_enable");
@@ -40,6 +45,7 @@ void print_struct(std::vector<irisConfig> &conf)
 		LOG("df: ", tmp.df);
 		LOG("perfmgr是否开启: ", tmp.perfmgr_enable);
 		LOG("目标fps: ", tmp.fixed_target_fps);
+		LOG("\n");
 	}
 }
 void initProfile(std::string argv1)
