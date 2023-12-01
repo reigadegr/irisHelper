@@ -8,8 +8,9 @@
     使用说明：直接接收getTopApp()函数的返回值即可获取包名
     例如：std::string TopApp = getTopApp();
 #endif
-auto getTopAppShell() -> std::string;
-auto execCmdSync(std::string command, const std::vector<std::string> &args)
+static inline auto getTopAppShell() -> std::string;
+static inline auto execCmdSync(std::string command,
+			       const std::vector<std::string> &args)
 	-> std::string
 {
 	// 将命令和参数拼接为一个字符串
@@ -63,7 +64,7 @@ auto getTopApp() -> std::string
 	return getTopAppShell();
 }
 
-auto getTopAppShell() -> std::string
+static inline auto getTopAppShell() -> std::string
 {
 	std::string name;
 	const std::string str = execCmdSync("/system/bin/dumpsys",

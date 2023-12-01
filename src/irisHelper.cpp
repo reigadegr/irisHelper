@@ -8,7 +8,7 @@ auto RunStart(std::vector<irisConfig> &conf, std::string &now_package) -> bool;
 auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool;
 void print_struct(std::vector<irisConfig> &conf);
 
-void initProfile(std::string argv1)
+static inline void initProfile(std::string argv1)
 {
 	// 嘻嘻
 	std::system(

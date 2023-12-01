@@ -18,7 +18,7 @@ void print_struct(std::vector<irisConfig> &conf)
 	}
 }
 // 删除第一列
-void GetSecondArg(std::string &buf)
+static inline void GetSecondArg(std::string &buf)
 {
 	size_t pos = buf.find(' ');
 	if (pos != std::string::npos) {
@@ -31,7 +31,8 @@ static inline void reduceStr(std::string &buf)
 		buf.erase(buf.find("\""), 1);
 	}
 }
-auto strCtrl(std::string &buf, const char *target_str, std::string &arg) -> bool
+static inline auto strCtrl(std::string &buf, const char *target_str,
+			   std::string &arg) -> bool
 {
 	if (buf.find(target_str) != std::string::npos) {
 		GetSecondArg(buf);
@@ -84,7 +85,6 @@ auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool
 							  atoi(fixed_target_fps
 								       .c_str()) });
 					}
-
 					// reset value
 					params_a = "";
 					params_b = "";

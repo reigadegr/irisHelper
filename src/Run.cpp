@@ -7,7 +7,8 @@ auto opt_off() -> bool;
 auto printCurrentTime() -> std::string;
 auto getTopApp() -> std::string;
 auto opt_on(const struct irisConfig *o) -> bool;
-auto RunMain(std::vector<irisConfig> &conf, std::string &now_package) -> bool
+static inline auto RunMain(std::vector<irisConfig> &conf,
+			   std::string &now_package) -> bool
 {
 	// 获取TopApp name
 	std::string const TopApp = getTopApp();
