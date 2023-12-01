@@ -3,6 +3,7 @@
 #include "include/irisConfig.h"
 #include <iostream>
 #include <vector>
+#include <thread>
 void ihelper_default();
 auto RunStart(std::vector<irisConfig> &conf, std::string &now_package) -> bool;
 auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool;
@@ -35,5 +36,8 @@ auto main(int argc, char **argv) -> int
 
 	// 记录当前包名
 	std::string now_package = "";
-	RunStart(conf, now_package);
+	//RunStart(conf, now_package);
+	std::thread threadObj(RunStart, std::ref(conf), std::ref(now_package));
+	threadObj.join();
+	threadObj.detach();
 }
