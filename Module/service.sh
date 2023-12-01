@@ -11,7 +11,16 @@ wait_until_login() {
     done
 }
 wait_until_login
-
+initfile(){
+    [ ! -d $(dirname "$1") ] && mkdir -p $(dirname "$1")
+    chattr -R -i "$1"
+    touch "$1"
+    chmod 0644 "$1"
+}
+init_filesystem(){
+    df_file="/data/system/mcd/df"        
+    initfile "$df_file"
+}
 MODDIR=${0%/*}
 FileName="irisHelper"
 
@@ -19,8 +28,7 @@ if [ -f $MODDIR/$FileName.log ]; then
     mv -f $MODDIR/$FileName.log $MODDIR/$FileName.log.bak
 fi
 touch $MODDIR/$FileName.log
-#rm -rf /data/adb/modules/scene_systemless/iris
-
+init_filesystem
 chown 0:0 $MODDIR/$FileName
 chmod +x $MODDIR/$FileName
 killall -15 $FileName iris_helper
