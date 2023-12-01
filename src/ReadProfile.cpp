@@ -3,7 +3,29 @@
 #include <fstream>
 #include <iostream>
 #include <vector>
-void GetSecondArg(std::string &buf);
+#include <string>
+void print_struct(std::vector<irisConfig> &conf)
+{
+	for (const auto &tmp : conf) {
+		LOG("包名: ", tmp.app);
+		LOG("参数a: ", tmp.params_a);
+		LOG("参数b: ", tmp.params_b);
+		LOG("参数c: ", tmp.params_c);
+		LOG("参数d: ", tmp.params_d);
+		LOG("df: ", tmp.df);
+		LOG("perfmgr是否开启: ", tmp.perfmgr_enable);
+		LOG("目标fps: ", tmp.fixed_target_fps);
+		LOG("\n");
+	}
+}
+// 删除第一列
+void GetSecondArg(std::string &buf)
+{
+	size_t pos = buf.find(' ');
+	if (pos != std::string::npos) {
+		buf.erase(0, pos + 1); // 删除空格和左边的所有内容
+	}
+}
 static inline void reduceStr(std::string &buf)
 {
 	while (buf.find("\"") != std::string::npos) {
@@ -58,9 +80,10 @@ auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool
 							  params_c.c_str(),
 							  params_d.c_str(),
 							  df.c_str(),
-							  perfmgr_enable.c_str(),
-							  fixed_target_fps
-								  .c_str() });
+							  atoi(perfmgr_enable
+								       .c_str()),
+							  atoi(fixed_target_fps
+								       .c_str()) });
 					}
 
 					// reset value
@@ -115,8 +138,8 @@ auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool
 			conf.push_back({ app.c_str(), params_a.c_str(),
 					 params_b.c_str(), params_c.c_str(),
 					 params_d.c_str(), df.c_str(),
-					 perfmgr_enable.c_str(),
-					 fixed_target_fps.c_str() });
+					 atoi(perfmgr_enable.c_str()),
+					 atoi(fixed_target_fps.c_str()) });
 		}
 	}
 	file.close();

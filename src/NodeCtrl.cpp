@@ -3,6 +3,23 @@
 #include "include/irisConfig.h"
 
 void ihelper_default();
+void ihelper_default()
+{
+	std::string oo = " ";
+	std::system(
+		("/odm/bin/irisConfig \"47 1 0\"" + oo + "2>/dev/null").c_str());
+	std::system(("/odm/bin/irisConfig \"258 1 0\"" + oo + "2>/dev/null")
+			    .c_str());
+
+	std::system(("/odm/bin/irisConfig \"267 2 3 0\"" + oo + "2>/dev/null")
+			    .c_str());
+	std::system(("/odm/bin/irisConfig \"273 1 0\"" + oo + "2>/dev/null")
+			    .c_str());
+
+	lock_val("", "/data/system/mcd/df");
+	lock_val(0, "/sys/module/perfmgr_mtk/parameters/perfmgr_enable");
+	lock_val(-1, "/sys/module/perfmgr_mtk/parameters/fixed_target_fps");
+}
 auto params_run(std::string param) -> std::string
 {
 	if (param == "") {

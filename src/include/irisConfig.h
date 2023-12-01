@@ -7,6 +7,6 @@ struct irisConfig {
 	const std::string params_c;
 	const std::string params_d;
 	const std::string df;
-	const std::string perfmgr_enable;
-	const std::string fixed_target_fps;
+	const int perfmgr_enable;
+	const int fixed_target_fps;
 } __attribute__((aligned(64)));
