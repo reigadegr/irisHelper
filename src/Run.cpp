@@ -36,10 +36,20 @@ static inline auto RunMain(std::vector<irisConfig> &conf,
 	return true;
 }
 
-auto RunStart(std::vector<irisConfig> &conf, std::string &now_package) -> bool
+static inline auto RunStart(std::vector<irisConfig> &conf,
+			    std::string &now_package) -> bool
 {
+	pthread_setname_np(pthread_self(), "RunMain");
 	while (true) {
 		RunMain(conf, now_package);
 		std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 	}
+	return false;
+}
+
+auto runThread(std::vector<irisConfig> &conf, std::string &now_package) -> bool
+{
+	std::thread threadObj(RunStart, std::ref(conf), std::ref(now_package));
+	threadObj.join();
+	return false;
 }

@@ -8,3 +8,4 @@ Module/irisHelper
 *.bak
 */*.bak
 */*.zip
+*/*.log
