@@ -6,6 +6,7 @@
 void print_struct(std::vector<irisConfig> &conf)
 {
 	for (const auto &tmp : conf) {
+		LOG("已成功添加: ");
 		LOG("包名: ", tmp.app);
 		LOG("参数a: ", tmp.params_a);
 		LOG("参数b: ", tmp.params_b);
