@@ -15,6 +15,7 @@ void print_struct(std::vector<irisConfig> &conf)
 		LOG("df: ", tmp.df);
 		LOG("perfmgr是否开启: ", tmp.perfmgr_enable);
 		LOG("目标fps: ", tmp.fixed_target_fps);
+		LOG("低功耗perfmgr: ", tmp.perfmgr_powersave);
 		LOG("\n");
 	}
 }
@@ -60,6 +61,7 @@ auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool
 		std::string df = "";
 		std::string perfmgr_enable = "0";
 		std::string fixed_target_fps = "-1";
+		std::string perfmgr_powersave = "N";
 		bool flag = false;
 		while (std::getline(file, buf)) {
 			if (buf[0] == '#' || buf.empty()) {
@@ -73,7 +75,8 @@ auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool
 					      params_c == "" &&
 					      params_d == "" && df == "" &&
 					      perfmgr_enable == "0" &&
-					      fixed_target_fps == "-1")) {
+					      fixed_target_fps == "-1" &&
+					      perfmgr_powersave == "N")) {
 						conf.push_back(
 							{ app.c_str(),
 							  params_a.c_str(),
@@ -84,7 +87,9 @@ auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool
 							  atoi(perfmgr_enable
 								       .c_str()),
 							  atoi(fixed_target_fps
-								       .c_str()) });
+								       .c_str()),
+							  perfmgr_powersave
+								  .c_str() });
 					}
 					// reset value
 					params_a = "";
@@ -94,6 +99,7 @@ auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool
 					df = "";
 					perfmgr_enable = "0";
 					fixed_target_fps = "-1";
+					perfmgr_powersave = "N";
 				}
 				GetSecondArg(buf);
 				reduceStr(buf);
@@ -128,18 +134,23 @@ auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool
 				    fixed_target_fps)) {
 				continue;
 			}
+			if (strCtrl(buf, "perfmgr_powersave",
+				    perfmgr_powersave)) {
+				continue;
+			}
 		}
 		if (app == "") {
 			break;
 		}
 		if (!(params_a == "" && params_b == "" && params_c == "" &&
 		      params_d == "" && df == "" && perfmgr_enable == "0" &&
-		      fixed_target_fps == "-1")) {
+		      fixed_target_fps == "-1" && perfmgr_powersave == "N")) {
 			conf.push_back({ app.c_str(), params_a.c_str(),
 					 params_b.c_str(), params_c.c_str(),
 					 params_d.c_str(), df.c_str(),
 					 atoi(perfmgr_enable.c_str()),
-					 atoi(fixed_target_fps.c_str()) });
+					 atoi(fixed_target_fps.c_str()),
+					 perfmgr_powersave.c_str() });
 		}
 	}
 	file.close();

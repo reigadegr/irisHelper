@@ -39,6 +39,8 @@ auto opt_on(const struct irisConfig *o) -> bool
 
 	lock_val(o->fixed_target_fps,
 		 "/sys/module/perfmgr_mtk/parameters/fixed_target_fps");
+	lock_val(o->perfmgr_powersave,
+		 "/sys/module/perfmgr_mtk/parameters/powersave");
 	params_run(o->params_a);
 	params_run(o->params_b);
 	params_run(o->params_c);
@@ -52,5 +54,6 @@ auto opt_off() -> bool
 	lock_val("", "/data/system/mcd/df");
 	Unlock_val(0, "/sys/module/perfmgr_mtk/parameters/perfmgr_enable");
 	Unlock_val(-1, "/sys/module/perfmgr_mtk/parameters/fixed_target_fps");
+	Unlock_val("N", "/sys/module/perfmgr_mtk/parameters/powersave");
 	return true;
 }

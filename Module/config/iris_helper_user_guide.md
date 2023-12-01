@@ -35,7 +35,7 @@ Therefore, the Param 2 you want is 52.
 --------
 
 For Yuni Kernel, the module supports modifying FEAS parameters.
-Enable FEAS while pfmgr_enable: 1
+Enable FEAS while perfmgr_enable: 1
 Enable powersave mode for FEAS while pfmgr_pwsave: 1
 Set target FPS for FEAS while f_t_fps exists
 Lock max FPS at df while it exists
