@@ -36,8 +36,8 @@ auto main(int argc, char **argv) -> int
 
 	// 记录当前包名
 	std::string now_package = "";
-	//RunStart(conf, now_package);
+
 	std::thread threadObj(RunStart, std::ref(conf), std::ref(now_package));
 	threadObj.join();
-	threadObj.detach();
+	//threadObj.detach();
 }
