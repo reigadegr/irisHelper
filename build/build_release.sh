@@ -39,7 +39,8 @@ compile_start() {
 
 	/data/data/com.termux/files/usr/bin/strip $output
 
-	cp -f $output $for_test
+	cp -af $output $for_test
+	cp -af $output $(pwd)/../Module
 	chmod +x $for_test
 
 	echo "当前时间：$(date +%Y) 年 $(date +%m) 月 $(date +%d) 日 $(date +%H) 时 $(date +%M) 分 $(date +%S) 秒"

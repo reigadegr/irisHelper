@@ -29,6 +29,8 @@
 # Executables
 output/irisHelper
 Test/irisHelper
+Module/irisHelper
 *.exe
 *.out
 *.app
+*.bak
