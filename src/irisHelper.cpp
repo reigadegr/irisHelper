@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <thread>
+#include <mutex>
 void ihelper_default();
 //auto RunStart(std::vector<irisConfig> &conf, std::string &now_package) -> bool;
 auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool;
@@ -37,6 +38,8 @@ auto main(int argc, char **argv) -> int
 
 	// 记录当前包名
 	std::string now_package = "";
+
+	std::mutex confMutex;
 	runThread(conf, now_package,
 		  "/data/data/com.termux/files/home/irisHelper/Module",
 		  argv[1]);

@@ -10,7 +10,11 @@
 #include <unistd.h>
 #include <vector>
 #include <thread>
+#include <mutex>
 #include "include/irisConfig.h"
+
+static std::mutex confMutex;
+
 #define EVENT_SIZE (sizeof(struct inotify_event))
 #define BUF_LEN (1024 * (EVENT_SIZE + 16))
 auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool;
@@ -71,6 +75,8 @@ auto profileMonitor(const char *dic, const char *profile,
 						*/
 						printf("文件:%s 被创建辣!\n",
 						       event->name);
+						std::lock_guard<std::mutex> lock(
+							confMutex);
 						readProfile(profile, conf);
 
 					} else if (event->mask & IN_DELETE) {
@@ -85,6 +91,8 @@ auto profileMonitor(const char *dic, const char *profile,
 						*/
 						printf("文件:%s 被删除辣!\n",
 						       event->name);
+						std::lock_guard<std::mutex> lock(
+							confMutex);
 						readProfile(profile, conf);
 
 					} else if (event->mask & IN_MODIFY) {
@@ -100,6 +108,8 @@ auto profileMonitor(const char *dic, const char *profile,
 
 						printf("文件:%s 被修改辣!\n",
 						       event->name);
+						std::lock_guard<std::mutex> lock(
+							confMutex);
 						readProfile(profile, conf);
 					}
 					//////

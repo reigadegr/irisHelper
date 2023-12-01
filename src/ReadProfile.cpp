@@ -3,6 +3,8 @@
 #include <fstream>
 #include <vector>
 #include <string>
+#include <mutex>
+static std::mutex confMutex;
 void print_struct(std::vector<irisConfig> &conf)
 {
 	for (const auto &tmp : conf) {
@@ -78,6 +80,8 @@ auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool
 					      perfmgr_enable == "0" &&
 					      fixed_target_fps == "-1" &&
 					      perfmgr_powersave == "N")) {
+						std::lock_guard<std::mutex> lock(
+							confMutex);
 						conf.push_back(
 							{ app.c_str(),
 							  params_a.c_str(),
@@ -146,6 +150,7 @@ auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool
 		if (!(params_a == "" && params_b == "" && params_c == "" &&
 		      params_d == "" && df == "" && perfmgr_enable == "0" &&
 		      fixed_target_fps == "-1" && perfmgr_powersave == "N")) {
+			std::lock_guard<std::mutex> lock(confMutex);
 			conf.push_back({ app.c_str(), params_a.c_str(),
 					 params_b.c_str(), params_c.c_str(),
 					 params_d.c_str(), df.c_str(),
