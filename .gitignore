@@ -2,6 +2,7 @@
 output
 Test/irisHelper
 Module/irisHelper
+Module/config/*.bak
 *.exe
 *.out
 *.app
