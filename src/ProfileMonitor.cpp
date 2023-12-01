@@ -12,13 +12,13 @@
 #include <thread>
 #include <mutex>
 #include "include/irisConfig.h"
-
+#include "include/LOG.h"
 static std::mutex confMutex;
 
 #define EVENT_SIZE (sizeof(struct inotify_event))
 #define BUF_LEN (1024 * (EVENT_SIZE + 16))
 auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool;
-
+auto printCurrentTime() -> std::string;
 auto profileMonitor(const char *dic, const char *profile,
 		    std::vector<irisConfig> &conf) -> int
 {
@@ -73,7 +73,8 @@ auto profileMonitor(const char *dic, const char *profile,
 							       event->name);
 						}
 						*/
-
+						LOG("时间: ",
+						    printCurrentTime());
 						printf("文件:%s 被修改辣!\n",
 						       event->name);
 						std::lock_guard<std::mutex> lock(

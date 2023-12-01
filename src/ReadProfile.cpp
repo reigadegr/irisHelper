@@ -56,7 +56,7 @@ auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool
 	}
 	conf.clear();
 	std::string buf;
-	LOG("加载配置文件...");
+	LOG("加载配置文件...\n");
 	while (true) {
 		std::string app = "";
 		std::string params_a = "";
