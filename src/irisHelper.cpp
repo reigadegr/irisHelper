@@ -8,7 +8,8 @@ void ihelper_default();
 //auto RunStart(std::vector<irisConfig> &conf, std::string &now_package) -> bool;
 auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool;
 void print_struct(std::vector<irisConfig> &conf);
-auto runThread(std::vector<irisConfig> &conf, std::string &now_package) -> bool;
+auto runThread(std::vector<irisConfig> &conf, std::string &now_package,
+	       const char *dic, const char *profile) -> bool;
 static inline void initProfile(std::string argv1)
 {
 	// 嘻嘻
@@ -36,5 +37,7 @@ auto main(int argc, char **argv) -> int
 
 	// 记录当前包名
 	std::string now_package = "";
-	runThread(conf, now_package);
+	runThread(conf, now_package,
+		  "/data/data/com.termux/files/home/irisHelper/Module",
+		  argv[1]);
 }

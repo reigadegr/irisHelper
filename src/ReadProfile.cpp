@@ -51,6 +51,7 @@ auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool
 	if (!file.is_open()) {
 		return false;
 	}
+	conf.clear();
 	std::string buf;
 	while (true) {
 		std::string app = "";
