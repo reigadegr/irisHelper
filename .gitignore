@@ -27,7 +27,8 @@
 *.lib
 
 # Executables
-output
+output/irisHelper
+Test/irisHelper
 *.exe
 *.out
 *.app
