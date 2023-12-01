@@ -7,3 +7,8 @@ echo "目前版本修改完配置文件需要重新执行service.sh以更新"
 if [ -f /data/adb/modules/irisHelper_cpp/config/iriscfgcustomize.conf ]; then
     cp -af /data/adb/modules/irisHelper_cpp/config/iriscfgcustomize.conf /data/adb/modules_update/irisHelper_cpp/config/iriscfgcustomize.conf
 fi
+
+cat $MODPATH/README.md | while read row; do
+    echo $row
+    sleep 0.12
+done

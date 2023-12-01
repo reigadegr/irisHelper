@@ -43,7 +43,7 @@ compile_start() {
 	cp -af $output $(pwd)/../Module
 	chmod +x $for_test
 	cd $(dirname "$0")/../Module
-	rm $(pwd)/../output/irisHelper_cpp.zip 2>/dev/null
+	rm $(pwd)/../output/irisHelper_cpp.zip $(pwd)/*.bak 2>/dev/null
     /data/data/com.termux/files/usr/bin/zip -9 -rq "$(pwd)/../output/irisHelper_cpp.zip" .
 	echo "当前时间：$(date +%Y) 年 $(date +%m) 月 $(date +%d) 日 $(date +%H) 时 $(date +%M) 分 $(date +%S) 秒"
 }
