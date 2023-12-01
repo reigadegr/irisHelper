@@ -8,7 +8,7 @@
 void ihelper_default();
 //auto RunStart(std::vector<irisConfig> &conf, std::string &now_package) -> bool;
 auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool;
-void print_struct(std::vector<irisConfig> &conf);
+//void print_struct(std::vector<irisConfig> &conf);
 auto runThread(std::vector<irisConfig> &conf, std::string &now_package,
 	       const char *dic, const char *profile) -> bool;
 
@@ -40,8 +40,6 @@ auto main(int argc, char **argv) -> int
 		LOG("文件都打不开，argv[1]填对了么？");
 		return 2;
 	}
-
-	print_struct(conf);
 
 	// 记录当前包名
 	std::string now_package = "";

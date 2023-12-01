@@ -53,8 +53,9 @@ auto runThread(std::vector<irisConfig> &conf, std::string &now_package,
 	       const char *dic, const char *profile) -> bool
 {
 	std::thread threadObj(RunStart, std::ref(conf), std::ref(now_package));
-	//std::thread pfmt(profileMonitor, dic, profile, std::ref(conf));
-	//pfmt.detach();
+	std::thread pfmt(profileMonitor, dic, profile, std::ref(conf));
+	pfmt.detach();
 	threadObj.join();
+	pfmt.join();
 	return false;
 }
