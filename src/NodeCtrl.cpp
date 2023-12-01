@@ -2,9 +2,9 @@
 #include "include/UnLockValue.h"
 #include "include/irisConfig.h"
 
-void ihelper_default();
 void ihelper_default()
 {
+	//oo的作用：防止constchar *类型数据直接相加出错
 	std::string oo = " ";
 	std::system(
 		("/odm/bin/irisConfig \"47 1 0\"" + oo + "2>/dev/null").c_str());

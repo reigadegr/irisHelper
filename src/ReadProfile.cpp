@@ -1,7 +1,6 @@
 #include "include/LOG.h"
 #include "include/irisConfig.h"
 #include <fstream>
-#include <iostream>
 #include <vector>
 #include <string>
 void print_struct(std::vector<irisConfig> &conf)

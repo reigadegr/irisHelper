@@ -1,7 +1,6 @@
 #include "include/LOG.h"
 #include "include/LockValue.h"
 #include "include/irisConfig.h"
-#include <sstream>
 #include <thread>
 #include <vector>
 auto opt_off() -> bool;
