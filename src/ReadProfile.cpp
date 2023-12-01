@@ -52,11 +52,15 @@ auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool
 					      perfmgr_enable == "0" &&
 					      fixed_target_fps == "-1")) {
 						conf.push_back(
-							{ app, params_a,
-							  params_b, params_c,
-							  params_d, df,
-							  perfmgr_enable,
-							  fixed_target_fps });
+							{ app.c_str(),
+							  params_a.c_str(),
+							  params_b.c_str(),
+							  params_c.c_str(),
+							  params_d.c_str(),
+							  df.c_str(),
+							  perfmgr_enable.c_str(),
+							  fixed_target_fps
+								  .c_str() });
 					}
 
 					// reset value
@@ -108,9 +112,11 @@ auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool
 		if (!(params_a == "" && params_b == "" && params_c == "" &&
 		      params_d == "" && df == "" && perfmgr_enable == "0" &&
 		      fixed_target_fps == "-1")) {
-			conf.push_back({ app, params_a, params_b, params_c,
-					 params_d, df, perfmgr_enable,
-					 fixed_target_fps });
+			conf.push_back({ app.c_str(), params_a.c_str(),
+					 params_b.c_str(), params_c.c_str(),
+					 params_d.c_str(), df.c_str(),
+					 perfmgr_enable.c_str(),
+					 fixed_target_fps.c_str() });
 		}
 	}
 	file.close();

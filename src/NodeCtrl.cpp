@@ -14,7 +14,8 @@ auto params_run(std::string param) -> std::string
 }
 auto opt_on(const struct irisConfig *o) -> bool
 {
-	lock_val(o->app + " " + o->df, "/data/system/mcd/df");
+	std::string oo = " ";
+	lock_val(o->app + oo + o->df, "/data/system/mcd/df");
 
 	lock_val(o->perfmgr_enable,
 		 "/sys/module/perfmgr_mtk/parameters/perfmgr_enable");

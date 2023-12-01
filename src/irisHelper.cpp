@@ -17,9 +17,10 @@ void GetSecondArg(std::string &buf)
 		buf.erase(0, pos + 1); // 删除空格和左边的所有内容
 	}
 }
-std::string oo = " ";
+
 void ihelper_default()
 {
+	std::string oo = " ";
 	std::system(
 		("/odm/bin/irisConfig \"47 1 0\"" + oo + "2>/dev/null").c_str());
 	std::system(("/odm/bin/irisConfig \"258 1 0\"" + oo + "2>/dev/null")
