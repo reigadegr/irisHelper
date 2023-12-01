@@ -8,8 +8,8 @@ auto params_run(std::string param) -> std::string
 	if (param == "") {
 		return {};
 	}
-	std::system(("/odm/bin/irisConfig \"" + param + "\"" + " 2>/dev/null")
-			    .c_str());
+	std::system(
+		("/odm/bin/irisConfig \"" + param + "\" 2>/dev/null").c_str());
 	return {};
 }
 auto opt_on(const struct irisConfig *o) -> bool
