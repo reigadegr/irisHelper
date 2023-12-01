@@ -63,39 +63,7 @@ auto profileMonitor(const char *dic, const char *profile,
 					(struct inotify_event *)&buffer[pos];
 				if (event->len) {
 					/////////
-					if (event->mask & IN_CREATE) {
-						/*
-						if (event->mask & IN_ISDIR) {
-							printf("The directory %s was created.\n",
-							       event->name);
-						} else {
-							printf("The file %s was created.\n",
-							       event->name);
-						}
-						*/
-						printf("文件:%s 被创建辣!\n",
-						       event->name);
-						std::lock_guard<std::mutex> lock(
-							confMutex);
-						readProfile(profile, conf);
-
-					} else if (event->mask & IN_DELETE) {
-						/*
-						if (event->mask & IN_ISDIR) {
-							printf("The directory %s was deleted.\n",
-							       event->name);
-						} else {
-							printf("The file %s was deleted.\n",
-							       event->name);
-						}
-						*/
-						printf("文件:%s 被删除辣!\n",
-						       event->name);
-						std::lock_guard<std::mutex> lock(
-							confMutex);
-						readProfile(profile, conf);
-
-					} else if (event->mask & IN_MODIFY) {
+					if (event->mask & IN_MODIFY) {
 						/*
 						if (event->mask & IN_ISDIR) {
 							printf("The directory %s was modified.\n",

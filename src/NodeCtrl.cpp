@@ -20,7 +20,7 @@ void ihelper_default()
 	lock_val(0, "/sys/module/perfmgr_mtk/parameters/perfmgr_enable");
 	lock_val(-1, "/sys/module/perfmgr_mtk/parameters/fixed_target_fps");
 }
-auto params_run(std::string param) -> std::string
+static inline auto params_run(std::string param) -> std::string
 {
 	if (param == "") {
 		return {};
