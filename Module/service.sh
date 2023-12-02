@@ -12,10 +12,12 @@ wait_until_login() {
 }
 wait_until_login
 initfile(){
+    chattr -R -i $(dirname "$1")
+    rm -rf $(dirname "$1")
     [ ! -d $(dirname "$1") ] && mkdir -p $(dirname "$1")
-    chattr -R -i "$1"
-    touch "$1"
-    chmod 0644 "$1"
+    true > "$1"
+    chown 0:0 "$1"
+    chmod 0444 "$1"
 }
 init_filesystem(){
     df_file="/data/system/mcd/df"        
