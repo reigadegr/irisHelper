@@ -24,7 +24,7 @@ auto profileMonitor(const char *dic, const char *profile,
 	// inotify 初始化
 	int fd = inotify_init();
 	int wd = inotify_add_watch(fd, dic, IN_MODIFY);
-	// 监听指定目录下的修改、创建、删除事件
+	// 监听指定目录下的修改事件
 
 	// 创建一个 epoll 句柄
 	int epfd = epoll_create(256);
@@ -60,10 +60,10 @@ auto profileMonitor(const char *dic, const char *profile,
 			while (pos < length) {
 				struct inotify_event *event =
 					(struct inotify_event *)&buffer[pos];
-				if (event->len) {
+				if (event->len && (event->mask & IN_MODIFY)) {
 					/////////
-					if (event->mask & IN_MODIFY) {
-						/*
+
+					/*
 						if (event->mask & IN_ISDIR) {
 							printf("The directory %s was modified.\n",
 							       event->name);
@@ -72,17 +72,16 @@ auto profileMonitor(const char *dic, const char *profile,
 							       event->name);
 						}
 						*/
-						LOG("时间: ",
-						    printCurrentTime());
-						printf("文件:%s 被修改辣!\n",
-						       event->name);
-						std::this_thread::sleep_for(
-							std::chrono::milliseconds(
-								1000));
-						std::lock_guard<std::mutex> lock(
-							confMutex);
-						readProfile(profile, conf);
-					}
+					LOG("时间: ", printCurrentTime());
+					printf("文件:%s 被修改辣!\n",
+					       event->name);
+					std::this_thread::sleep_for(
+						std::chrono::milliseconds(
+							1000));
+					std::lock_guard<std::mutex> lock(
+						confMutex);
+					readProfile(profile, conf);
+
 					//////
 				}
 				pos += EVENT_SIZE + event->len;

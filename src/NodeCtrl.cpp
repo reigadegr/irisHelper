@@ -48,9 +48,3 @@ auto opt_on(const struct irisConfig *o) -> bool
 	params_run(o->params_d);
 	return true;
 }
-
-auto opt_off() -> bool
-{
-	ihelper_default();
-	return true;
-}

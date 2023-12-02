@@ -3,10 +3,12 @@
 #include "include/irisConfig.h"
 #include <thread>
 #include <vector>
-auto opt_off() -> bool;
 auto printCurrentTime() -> std::string;
 auto getTopApp() -> std::string;
 auto opt_on(const struct irisConfig *o) -> bool;
+void ihelper_default();
+auto profileMonitor(const char *dic, const char *profile,
+		    std::vector<irisConfig> &conf) -> int;
 static inline auto RunMain(std::vector<irisConfig> &conf,
 			   std::string &now_package) -> bool
 {
@@ -32,7 +34,7 @@ static inline auto RunMain(std::vector<irisConfig> &conf,
 	}
 
 	LOG("检测到非列表应用: ", TopApp, "\n");
-	opt_off();
+	ihelper_default();
 	return true;
 }
 
@@ -46,8 +48,6 @@ static inline auto RunStart(std::vector<irisConfig> &conf,
 	}
 	return false;
 }
-auto profileMonitor(const char *dic, const char *profile,
-		    std::vector<irisConfig> &conf) -> int;
 
 auto runThread(std::vector<irisConfig> &conf, std::string &now_package,
 	       const char *dic, const char *profile) -> bool
