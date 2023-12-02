@@ -13,7 +13,7 @@
 #include "include/LOG.h"
 #define EVENT_SIZE (sizeof(struct inotify_event))
 #define BUF_LEN (1024 * (EVENT_SIZE + 16))
-
+#define 事件数量 20
 static std::mutex confMutex;
 auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool;
 auto printCurrentTime() -> std::string;
@@ -37,7 +37,7 @@ auto profileMonitor(const char *dic, const char *profile,
 
 	// 循环监听事件
 	char buffer[BUF_LEN];
-#define 事件数量 20
+
 	struct epoll_event events[事件数量]; // 存储从内核得到的事件集合
 	while (true) {
 		// 等待事件发生。返回需要处理的事件数目

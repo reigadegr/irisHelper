@@ -33,7 +33,6 @@ auto main(int argc, char **argv) -> int
 	}
 	initProfile(argv[1]);
 	ihelper_default();
-
 	std::vector<irisConfig> conf;
 
 	if (!readProfile(argv[1], conf)) {
