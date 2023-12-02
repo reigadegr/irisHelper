@@ -20,9 +20,10 @@ static std::mutex confMutex;
 auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool;
 auto printCurrentTime() -> std::string;
 auto getTopApp() -> std::string;
-auto opt_on(const struct irisConfig *o) -> bool;
-void ihelper_default();
-static inline auto forceReload(std::vector<irisConfig> &conf) -> bool
+auto opt_on(const struct irisConfig *o, const struct FeasPath *p) -> bool;
+void ihelper_default(const struct FeasPath *p);
+static inline auto forceReload(std::vector<irisConfig> &conf,
+                               FeasPath &feaspath) -> bool
 {
     // 获取TopApp name
     std::string const TopApp = getTopApp();
@@ -32,18 +33,18 @@ static inline auto forceReload(std::vector<irisConfig> &conf) -> bool
     for (const auto &game : conf) {
         if (TopApp.find(game.app) != std::string::npos) {
             LOG("检测到列表应用:   ", game.app, "\n");
-            opt_on(&game);
+            opt_on(&game, &feaspath);
             return true;
         }
     }
 
     LOG("检测到非列表应用: ", TopApp, "\n");
-    ihelper_default();
+    ihelper_default(&feaspath);
     return true;
 }
 
 auto profileMonitor(const char *dic, const char *profile,
-                    std::vector<irisConfig> &conf) -> int
+                    std::vector<irisConfig> &conf, FeasPath &feaspath) -> int
 {
     pthread_setname_np(pthread_self(), "profileMonitor");
     // inotify 初始化
@@ -107,7 +108,7 @@ auto profileMonitor(const char *dic, const char *profile,
                         readProfile(profile, conf);
                     }
                     LOG("强制重载中..");
-                    forceReload(conf);
+                    forceReload(conf, feaspath);
 
                     //////
                 }

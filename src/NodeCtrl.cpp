@@ -1,8 +1,10 @@
+#include "include/LOG.h"
 #include "include/LockValue.h"
+#include "include/Path.h"
 #include "include/UnLockValue.h"
 #include "include/irisConfig.h"
 
-void ihelper_default()
+void ihelper_default(const struct FeasPath *p)
 {
     // oo的作用：防止constchar *类型数据直接相加出错
     std::string oo = " ";
@@ -17,9 +19,10 @@ void ihelper_default()
         ("/odm/bin/irisConfig \"273 1 0\"" + oo + "2>/dev/null").c_str());
 
     Unlock_val("", "/data/system/mcd/df");
-    Unlock_val(0, "/sys/module/perfmgr_mtk/parameters/perfmgr_enable");
-    Unlock_val(-1, "/sys/module/perfmgr_mtk/parameters/fixed_target_fps");
-    Unlock_val("N", "/sys/module/perfmgr_mtk/parameters/powersave");
+
+    Unlock_val(0, (p->enable).c_str());
+    Unlock_val(-1, (p->fps).c_str());
+    Unlock_val("N", (p->powersave).c_str());
 }
 static inline auto params_run(std::string param) -> std::string
 {
@@ -29,18 +32,15 @@ static inline auto params_run(std::string param) -> std::string
     std::system(("/odm/bin/irisConfig \"" + param + "\" 2>/dev/null").c_str());
     return {};
 }
-auto opt_on(const struct irisConfig *o) -> bool
+auto opt_on(const struct irisConfig *o, const struct FeasPath *p) -> bool
 {
     std::string oo = " ";
     lock_val(o->app + oo + o->df, "/data/system/mcd/df");
 
-    lock_val(o->perfmgr_enable,
-             "/sys/module/perfmgr_mtk/parameters/perfmgr_enable");
+    lock_val(o->perfmgr_enable, (p->enable).c_str());
 
-    lock_val(o->fixed_target_fps,
-             "/sys/module/perfmgr_mtk/parameters/fixed_target_fps");
-    lock_val(o->perfmgr_powersave,
-             "/sys/module/perfmgr_mtk/parameters/powersave");
+    lock_val(o->fixed_target_fps, (p->fps).c_str());
+    lock_val(o->perfmgr_powersave, (p->powersave).c_str());
     params_run(o->params_a);
     params_run(o->params_b);
     params_run(o->params_c);

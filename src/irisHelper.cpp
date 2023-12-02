@@ -5,11 +5,16 @@
 
 #include "include/LOG.h"
 #include "include/LockValue.h"
+#include "include/Path.h"
 #include "include/irisConfig.h"
-void ihelper_default();
+void ihelper_default(const struct FeasPath *p);
 auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool;
 auto runThread(std::vector<irisConfig> &conf, std::string &now_package,
-               const char *dic, const char *profile) -> bool;
+               const char *dic, const char *profile, FeasPath &feaspath)
+    -> bool;
+auto whetherPerfmgrExists() -> std::string;
+
+void initFeasPath(struct FeasPath *p);
 
 static inline auto dirname(std::string path) -> std::string
 {
@@ -32,7 +37,9 @@ auto main(int argc, char **argv) -> int
         return 1;
     }
     initProfile(argv[1]);
-    ihelper_default();
+    FeasPath feaspath;
+    initFeasPath(&feaspath);
+    ihelper_default(&feaspath);
     std::vector<irisConfig> conf;
 
     if (!readProfile(argv[1], conf)) {
@@ -43,5 +50,5 @@ auto main(int argc, char **argv) -> int
     // 记录当前包名
     std::string now_package = "";
     std::mutex confMutex;
-    runThread(conf, now_package, (dirname(argv[1])).c_str(), argv[1]);
+    runThread(conf, now_package, (dirname(argv[1])).c_str(), argv[1], feaspath);
 }
