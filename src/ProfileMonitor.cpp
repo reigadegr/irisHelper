@@ -76,6 +76,9 @@ auto profileMonitor(const char *dic, const char *profile,
 						    printCurrentTime());
 						printf("文件:%s 被修改辣!\n",
 						       event->name);
+						std::this_thread::sleep_for(
+							std::chrono::milliseconds(
+								1000));
 						std::lock_guard<std::mutex> lock(
 							confMutex);
 						readProfile(profile, conf);
