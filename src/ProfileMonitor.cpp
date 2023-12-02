@@ -17,6 +17,29 @@
 static std::mutex confMutex;
 auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool;
 auto printCurrentTime() -> std::string;
+auto getTopApp() -> std::string;
+auto opt_on(const struct irisConfig *o) -> bool;
+void ihelper_default();
+static inline auto forceReload(std::vector<irisConfig> &conf) -> bool
+{
+	// 获取TopApp name
+	std::string const TopApp = getTopApp();
+
+	LOG("时间: ", printCurrentTime());
+	// 打印包名
+	for (const auto &game : conf) {
+		if (TopApp.find(game.app) != std::string::npos) {
+			LOG("检测到列表应用:   ", game.app, "\n");
+			opt_on(&game);
+			return true;
+		}
+	}
+
+	LOG("检测到非列表应用: ", TopApp, "\n");
+	ihelper_default();
+	return true;
+}
+
 auto profileMonitor(const char *dic, const char *profile,
 		    std::vector<irisConfig> &conf) -> int
 {
@@ -75,12 +98,17 @@ auto profileMonitor(const char *dic, const char *profile,
 					LOG("时间: ", printCurrentTime());
 					printf("文件:%s 被修改辣!\n",
 					       event->name);
+
 					std::this_thread::sleep_for(
 						std::chrono::milliseconds(
 							1000));
-					std::lock_guard<std::mutex> lock(
-						confMutex);
-					readProfile(profile, conf);
+					{
+						std::lock_guard<std::mutex> lock(
+							confMutex);
+						readProfile(profile, conf);
+					}
+					LOG("强制重载中..");
+					forceReload(conf);
 
 					//////
 				}
