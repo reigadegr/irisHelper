@@ -11,10 +11,10 @@
 #include <mutex>
 #include "include/irisConfig.h"
 #include "include/LOG.h"
-static std::mutex confMutex;
-
 #define EVENT_SIZE (sizeof(struct inotify_event))
 #define BUF_LEN (1024 * (EVENT_SIZE + 16))
+
+static std::mutex confMutex;
 auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool;
 auto printCurrentTime() -> std::string;
 auto profileMonitor(const char *dic, const char *profile,
@@ -23,7 +23,7 @@ auto profileMonitor(const char *dic, const char *profile,
 	pthread_setname_np(pthread_self(), "profileMonitor");
 	// inotify 初始化
 	int fd = inotify_init();
-	int wd = inotify_add_watch(fd, dic, IN_MODIFY | IN_CREATE | IN_DELETE);
+	int wd = inotify_add_watch(fd, dic, IN_MODIFY);
 	// 监听指定目录下的修改、创建、删除事件
 
 	// 创建一个 epoll 句柄
@@ -37,10 +37,11 @@ auto profileMonitor(const char *dic, const char *profile,
 
 	// 循环监听事件
 	char buffer[BUF_LEN];
-	struct epoll_event events[20]; // 存储从内核得到的事件集合
+#define 事件数量 20
+	struct epoll_event events[事件数量]; // 存储从内核得到的事件集合
 	while (true) {
 		// 等待事件发生。返回需要处理的事件数目
-		int nfds = epoll_wait(epfd, events, 20, 500);
+		int nfds = epoll_wait(epfd, events, 事件数量, 1000);
 		for (int i = 0; i < nfds; ++i) {
 			/**
              * epoll_wait 会一直阻塞直到下面2种情况：
@@ -91,11 +92,3 @@ auto profileMonitor(const char *dic, const char *profile,
 	close(fd);
 	return 0;
 }
-/*
-void profileMonitorThread(const char *dic, const char *profile,
-			  std::vector<irisConfig> &conf)
-{
-	std::thread pfmt(profileMonitor, dic, profile, std::ref(conf));
-	pfmt.join();
-}
-*/
