@@ -16,9 +16,10 @@ void ihelper_default()
 	std::system(("/odm/bin/irisConfig \"273 1 0\"" + oo + "2>/dev/null")
 			    .c_str());
 
-	lock_val("", "/data/system/mcd/df");
-	lock_val(0, "/sys/module/perfmgr_mtk/parameters/perfmgr_enable");
-	lock_val(-1, "/sys/module/perfmgr_mtk/parameters/fixed_target_fps");
+	Unlock_val("", "/data/system/mcd/df");
+	Unlock_val(0, "/sys/module/perfmgr_mtk/parameters/perfmgr_enable");
+	Unlock_val(-1, "/sys/module/perfmgr_mtk/parameters/fixed_target_fps");
+	Unlock_val("N", "/sys/module/perfmgr_mtk/parameters/powersave");
 }
 static inline auto params_run(std::string param) -> std::string
 {
@@ -51,9 +52,5 @@ auto opt_on(const struct irisConfig *o) -> bool
 auto opt_off() -> bool
 {
 	ihelper_default();
-	lock_val("", "/data/system/mcd/df");
-	Unlock_val(0, "/sys/module/perfmgr_mtk/parameters/perfmgr_enable");
-	Unlock_val(-1, "/sys/module/perfmgr_mtk/parameters/fixed_target_fps");
-	Unlock_val("N", "/sys/module/perfmgr_mtk/parameters/powersave");
 	return true;
 }
