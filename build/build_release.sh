@@ -8,15 +8,9 @@ remove_file() {
 
 format_code() {
 	echo "当前时间：$(date +%Y) 年 $(date +%m) 月 $(date +%d) 日 $(date +%H) 时 $(date +%M) 分 $(date +%S) 秒"
-	code_file="
-        $project_root/src/*.cpp
-        $project_root/src/include/*.h
-    "
-
-	for i in $code_file; do
-		echo "开始格式化$(basename $i)"
-		/data/data/com.termux/files/usr/bin/clang-format -i $i
-	done
+	/data/data/com.termux/files/usr/bin/clang-format -i $project_root/src/*.cpp
+    /data/data/com.termux/files/usr/bin/clang-format -i $project_root/src/include/*.h
+    echo "格式化代码完毕"
 }
 
 compile_start() {

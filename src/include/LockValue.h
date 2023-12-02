@@ -1,38 +1,40 @@
 #pragma once
+#include <sys/mount.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
 #include <filesystem>
 #include <fstream>
 #include <iostream>
 #include <string>
-#include <sys/mount.h>
-#include <sys/stat.h>
-#include <unistd.h>
-template <typename T> static void lock_val(T value, const char *path)
+template <typename T>
+static void lock_val(T value, const char *path)
 {
-	if (!std::filesystem::exists(path)) {
-		// LOG("Warning: ", path, " 不存在");
-		return;
-	}
-	umount(path);
-	// check
-	// done
+    if (!std::filesystem::exists(path)) {
+        // LOG("Warning: ", path, " 不存在");
+        return;
+    }
+    umount(path);
+    // check
+    // done
 
-	// chown(TmpPath,0,0);
-	chmod(path, 0666);
-	// target_file:path
-	// 对象
+    // chown(TmpPath,0,0);
+    chmod(path, 0666);
+    // target_file:path
+    // 对象
 
-	std::ofstream target_file(path, std::ios::out | std::ios::trunc);
-	if (!target_file.is_open()) {
-		std::cerr << "无法打开文件进行写操作: " << path << std::endl;
-		return;
-	}
+    std::ofstream target_file(path, std::ios::out | std::ios::trunc);
+    if (!target_file.is_open()) {
+        std::cerr << "无法打开文件进行写操作: " << path << std::endl;
+        return;
+    }
 
-	target_file << value;
-	target_file.close();
+    target_file << value;
+    target_file.close();
 
-	chmod(path, 0555);
-	// mask value
-	/*
+    chmod(path, 0555);
+    // mask value
+    /*
 const std::string mask_dir = "/data/local/tmp";
 const std::string mount_mask_file = mask_dir + "/mount_mask_" +
 std::to_string(value);
