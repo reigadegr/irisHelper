@@ -7,3 +7,4 @@ Module/config/*.bak
 */*.bak
 */*.zip
 */*.log
+getAllSource/*.cpp
