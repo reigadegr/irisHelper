@@ -34,13 +34,18 @@ static inline auto params_run(std::string param) -> std::string
 }
 auto opt_on(const struct irisConfig *o, const struct FeasPath *p) -> bool
 {
-    std::string oo = " ";
-    lock_val(o->app + oo + o->df, "/data/system/mcd/df");
+    // df
+    if (o->df != "") {
+        std::string oo = " ";
+        lock_val(o->app + oo + o->df, "/data/system/mcd/df");
+    }
 
+    // feas
     lock_val(o->perfmgr_enable, (p->enable).c_str());
-
     lock_val(o->fixed_target_fps, (p->fps).c_str());
     lock_val(o->perfmgr_powersave, (p->powersave).c_str());
+
+    // irisConfig params
     params_run(o->params_a);
     params_run(o->params_b);
     params_run(o->params_c);

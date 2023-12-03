@@ -1,6 +1,3 @@
-//
-// Created by lixiaoqing on 2022/7/12.
-//
 #include <errno.h>
 #include <fcntl.h>
 #include <sys/epoll.h>

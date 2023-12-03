@@ -1,5 +1,4 @@
 #include <iostream>
-#include <mutex>
 #include <thread>
 #include <vector>
 
@@ -49,6 +48,6 @@ auto main(int argc, char **argv) -> int
 
     // 记录当前包名
     std::string now_package = "";
-    std::mutex confMutex;
+
     runThread(conf, now_package, (dirname(argv[1])).c_str(), argv[1], feaspath);
 }
