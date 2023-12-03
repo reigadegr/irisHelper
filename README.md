@@ -1,26 +1,26 @@
 # irisHelper
 
-
 适用于搭载Pixelworks X7的设备
 插帧、HDR、超分参数自定义工具
 
-功能: 
+# 功能
 * 读取包名，根据配置文件参数对/odm/bin/irisConfig进行设置
 * 可对feas相关参数进行配置（必须设备本身支持）
 * inotifyd监控配置文件，监控到修改即重载
 
-食用方法：刷入模块，对/data/adb/modules/irisHelper/config/iriscfgcustomize.conf进行配置，也可以自己再添加包名
-本模块与Hydro_BrÛleur模块iris_helper的配置文件通用，可以把其配置文件复制到本模块的对应位置
+# 食用方法
+* 刷入模块，对/data/adb/modules/irisHelper/config/iriscfgcustomize.conf进行配置，也可以自己再添加包名
+* 本模块与Hydro_BrÛleur模块iris_helper的配置文件通用，可以把其配置文件复制到本模块的对应位置
 
-配置文件说明:
-app: 被监控的包名
-params_{a..d}: 传递给irisConfig的参数，最大支持四组
-perfmgr_enable：是否开启feas
-fixed_target_fps：游戏内目标帧率
-perfmgr_powersave：Yuni/Pandora内核专属节点。在高帧率(90/120/144)游戏如需更大程度降低功耗，可以填写Y。此状态下游戏体验可能有一定劣化，还原可填写N或者将整行删除
-至于参数写法，可以执行su -c /odm/bin/irisConfig -help指令查询，也可以查看模块内ab大佬写的iris_helper_user_guide.md
+# 配置文件说明
+* app: 被监控的包名
+* params_{a..d}: 传递给irisConfig的参数，最大支持四组
+* perfmgr_enable：是否开启feas
+* fixed_target_fps：游戏内目标帧率
+* perfmgr_powersave：Yuni/Pandora内核专属节点。在高帧率(90/120/144)游戏如需更大程度降低功耗，可以填写Y。此状态下游戏体验可能有一定劣化，还原可填写N或者将整行删除
+* 至于参数写法，可以执行su -c /odm/bin/irisConfig -help指令查询，也可以查看模块内ab大佬写的iris_helper_user_guide.md
 
-配置文件块写法：
+# 配置文件块写法
 app: "com.miHoYo.hkrpg"
 params_a: 258 4 40 -1 2 -1 3 0
 params_b: 47 1 13
