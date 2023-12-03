@@ -129,6 +129,9 @@ auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool
             continue;
         }
         if (strCtrl(buf, "perfmgr_powersave", perfmgr_powersave)) {
+            if (perfmgr_powersave != "Y" && perfmgr_enable != "N") {
+                perfmgr_enable = "N";
+            }
             continue;
         }
     }
