@@ -1,11 +1,10 @@
 # Executables
 .git
 output
-Test/irisHelper
-Module/irisHelper
 Module/config/*.bak
+build_speed/*.cpp
+*/irisHelper
 *.bak
 */*.bak
 */*.zip
 */*.log
-getAllSource/*.cpp

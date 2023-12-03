@@ -30,7 +30,7 @@ auto FindPerfmgrName(const std::string &dir, const std::string &str,
 static auto whetherPerfmgrExists() -> std::string
 {
     // 先检测perfmgr_mtk节点
-    if (!std::filesystem::exists("/sys/module/perfmgr_mtk")) {
+    if (!fs::exists("/sys/module/perfmgr_mtk")) {
         LOG("没刷YuniKernel");
         static std::string perfmgrName =
             FindPerfmgrName("/sys/module", "perfmgr_enable", "/parameters");
