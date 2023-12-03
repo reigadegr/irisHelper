@@ -160,7 +160,7 @@ fi
 # 删除 placeholder 文件
 rm -rf \
 $MODPATH/system/placeholder $MODPATH/customize.sh \
-$MODPATH/README.md $MODPATH/.git* 2>/dev/null
+$MODPATH/.git* 2>/dev/null
 
 ##############
 # 结束

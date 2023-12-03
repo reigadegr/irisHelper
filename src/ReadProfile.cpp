@@ -43,6 +43,10 @@ static inline auto strCtrl(std::string &buf, const char *target_str,
     if (buf.find(target_str) != std::string::npos) {
         GetSecondArg(buf);
         reduceStr(buf);
+        if (buf == target_str) {
+            buf = "";
+            return true;
+        }
         arg = buf;
         return true;
     }
@@ -126,6 +130,9 @@ auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool
             continue;
         }
         if (strCtrl(buf, "fixed_target_fps", fixed_target_fps)) {
+            if (fixed_target_fps == "") {
+                fixed_target_fps = "-1";
+            }
             continue;
         }
         if (strCtrl(buf, "perfmgr_powersave", perfmgr_powersave)) {

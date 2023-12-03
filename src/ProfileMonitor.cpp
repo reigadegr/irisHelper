@@ -99,7 +99,7 @@ auto profileMonitor(const char *dic, const char *profile,
                             }
                             */
                     LOG("时间: ", printCurrentTime());
-                    printf("文件:%s 被修改辣!\n", event->name);
+                    // printf("文件:%s 被修改辣!\n", event->name);
 
                     std::this_thread::sleep_for(
                         std::chrono::milliseconds(1000));
