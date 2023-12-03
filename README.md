@@ -18,7 +18,11 @@
 * perfmgr_enable：是否开启feas
 * fixed_target_fps：游戏内目标帧率
 * perfmgr_powersave：Yuni/Pandora内核专属节点。在高帧率(90/120/144)游戏如需更大程度降低功耗，可以填写Y。此状态下游戏体验可能有一定劣化，还原可填写N或者将整行删除
-* 至于参数写法，可以执行su -c /odm/bin/irisConfig -help指令查询，也可以查看模块内ab大佬写的iris_helper_user_guide.md
+    至于参数写法，可以执行
+    ```bash
+    su -c /odm/bin/irisConfig -help
+    ```
+    指令查询，也可以查看模块内ab大佬写的iris_helper_user_guide.md
 
 ## 配置文件块写法
     app: "com.miHoYo.hkrpg"
