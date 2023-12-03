@@ -60,6 +60,12 @@
 pkg install clang -y && pkg add ndk-multilib -y
 #clone项目
 git clone https://github.com/reigadegr/irisHelper --depth 1
+#1，传统方法编译
 cd $(pwd)/irisHelper/build
 sh build_release.sh
+
+#2，快速编译
+cd $(pwd)/irisHelper/build_speed
+sh build_speed.sh
+#编译完成后，可以去模块根目录的output文件夹获取模块
 ```

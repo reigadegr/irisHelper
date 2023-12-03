@@ -2,7 +2,7 @@
 project_root=$(pwd)/..
 
 remove_file() {
-	rm -rf $(pwd)/*.bak 
+	rm -rf $(pwd)/*.bak
 }
 
 file_ctrl(){
