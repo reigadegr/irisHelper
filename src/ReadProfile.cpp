@@ -7,19 +7,28 @@
 #include "include/LOG.h"
 #include "include/irisConfig.h"
 static std::mutex confMutex;
+template <typename T, typename U>
+static inline void printParams(const char *Description, const T &params,
+                               const U &default_value)
+{
+    if (params == default_value) {
+        return;
+    }
+    LOG(Description, params);
+}
 void print_struct(std::vector<irisConfig> &conf)
 {
     for (const auto &tmp : conf) {
         LOG("已成功添加: ");
         LOG("包名: ", tmp.app);
-        LOG("参数a: ", tmp.params_a);
-        LOG("参数b: ", tmp.params_b);
-        LOG("参数c: ", tmp.params_c);
-        LOG("参数d: ", tmp.params_d);
-        LOG("df: ", tmp.df);
-        LOG("perfmgr是否开启: ", tmp.perfmgr_enable);
-        LOG("目标fps: ", tmp.fixed_target_fps);
-        LOG("低功耗perfmgr: ", tmp.perfmgr_powersave);
+        printParams("参数a: ", tmp.params_a, "");
+        printParams("参数b: ", tmp.params_b, "");
+        printParams("参数c: ", tmp.params_c, "");
+        printParams("参数d: ", tmp.params_d, "");
+        printParams("df: ", tmp.df, "");
+        printParams("perfmgr是否开启: ", tmp.perfmgr_enable, 0);
+        printParams("目标fps: ", tmp.fixed_target_fps, -1);
+        printParams("低功耗perfmgr: ", tmp.perfmgr_powersave, "N");
         LOG("\n");
     }
 }
