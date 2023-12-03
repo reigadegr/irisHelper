@@ -44,7 +44,7 @@ static inline auto RunStart(std::vector<irisConfig> &conf,
                             std::string &now_package, FeasPath &feaspath)
     -> bool
 {
-    pthread_setname_np(pthread_self(), "RunMain");
+    pthread_setname_np(pthread_self(), "HeavyThread");
     while (true) {
         RunMain(conf, now_package, feaspath);
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));

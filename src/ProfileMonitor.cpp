@@ -43,7 +43,7 @@ static inline auto forceReload(std::vector<irisConfig> &conf,
 auto profileMonitor(const char *dic, const char *profile,
                     std::vector<irisConfig> &conf, FeasPath &feaspath) -> int
 {
-    pthread_setname_np(pthread_self(), "profileMonitor");
+    pthread_setname_np(pthread_self(), "ProfileMonitor");
     // inotify 初始化
     int fd = inotify_init();
     int wd = inotify_add_watch(fd, dic, IN_MODIFY);

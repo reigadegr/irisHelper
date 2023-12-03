@@ -31,6 +31,7 @@ static inline void initProfile(std::string argv1)
 }
 auto main(int argc, char **argv) -> int
 {
+    pthread_setname_np(pthread_self(), "MainThread");
     if (argv[1] == nullptr) {
         LOG("没填写命令行参数(argv[1])？");
         return 1;
