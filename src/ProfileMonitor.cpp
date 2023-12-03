@@ -28,8 +28,8 @@ static inline auto forceReload(std::vector<irisConfig> &conf,
     // 获取TopApp name
     std::string const TopApp = getTopApp();
 
-    LOG("时间: ", printCurrentTime());
-    // 打印包名
+    // LOG("时间: ", printCurrentTime());
+    //  打印包名
     for (const auto &game : conf) {
         if (TopApp.find(game.app) != std::string::npos) {
             LOG("检测到列表应用:   ", game.app, "\n");
