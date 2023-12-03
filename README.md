@@ -58,4 +58,3 @@ git clone https://github.com/reigadegr/irisHelper --depth 1
 cd $(pwd)/irisHelper/build
 sh build_release.sh
 ```
-***完成***
