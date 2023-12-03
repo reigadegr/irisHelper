@@ -34,7 +34,8 @@
     fixed_target_fps: 60
     perfmgr_powersave: N
     
-    #本模块与ab大佬的读文件逻辑不大相同，不写冒号，引号也可以，如下：
+    #本模块与ab大佬的读文件逻辑不大相同
+    #不写冒号，引号也可以，如下：
     
     app com.miHoYo.hkrpg
     params_a 258 4 40 -1 2 -1 3 0
