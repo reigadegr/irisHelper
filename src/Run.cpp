@@ -55,15 +55,15 @@ static inline auto RunStart(std::vector<irisConfig> &conf,
 auto runThread(std::vector<irisConfig> &conf, std::string &now_package,
                const char *dic, const char *profile, FeasPath &feaspath) -> bool
 {
-    std::thread threadObj(RunStart, std::ref(conf), std::ref(now_package),
-                          std::ref(feaspath));
+    std::thread HeavyThread(RunStart, std::ref(conf), std::ref(now_package),
+                            std::ref(feaspath));
 
-    std::thread pfmt(profileMonitor, dic, profile, std::ref(conf),
-                     std::ref(feaspath));
-    pfmt.detach();
-    threadObj.join();
+    std::thread profileMonitorThread(profileMonitor, dic, profile,
+                                     std::ref(conf), std::ref(feaspath));
+    // profileMonitorThread.detach();
+    HeavyThread.join();
 
-    pfmt.join();
+    profileMonitorThread.join();
 
     return false;
 }

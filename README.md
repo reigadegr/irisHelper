@@ -65,9 +65,12 @@ git clone https://github.com/reigadegr/irisHelper --depth 1
 cd $(pwd)/irisHelper/build
 sh build_release.sh
 
+#编译完成后，可以去模块根目录的output文件夹获取模块
+
 #2，快速编译
 cd $(pwd)/irisHelper/build_speed
 sh build_speed.sh
-#编译完成后，可以去模块根目录的output文件夹获取模块
+
 #快速编译已知bug: inotifyd无法监控配置文件
+#仅用于检测项目是否可以编译通过
 ```

@@ -8,7 +8,7 @@
 #include <iostream>
 #include <string>
 template <typename T>
-static void lock_val(T value, const char *path)
+static void lock_val(const T &value, const char *path)
 {
     if (!std::filesystem::exists(path)) {
         // LOG("Warning: ", path, " 不存在");
