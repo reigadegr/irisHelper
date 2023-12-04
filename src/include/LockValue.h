@@ -15,8 +15,6 @@ static void lock_val(const T &value, const char *path)
         return;
     }
     umount(path);
-    // check
-    // done
 
     // chown(TmpPath,0,0);
     chmod(path, 0666);
