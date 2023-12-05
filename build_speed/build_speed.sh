@@ -48,6 +48,7 @@ compile_start() {
 	/data/data/com.termux/files/usr/bin/aarch64-linux-android-strip $output
 
 	cp -af $output $for_test
+	cp -af $output $(pwd)
 	cp -af $output $(pwd)/../Module
 	chmod +x $for_test
 	#cd $(dirname "$0")/../Module

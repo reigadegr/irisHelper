@@ -4,23 +4,19 @@
 #include "include/UnLockValue.h"
 #include "include/irisConfig.h"
 
+static inline void defaultConfig(const std::string &Cmd)
+{
+    std::string fullCmd =
+        "nohup /odm/bin/irisConfig \"" + Cmd + "\"" + " >/dev/null 2>&1 &";
+    std::system(fullCmd.c_str());
+}
+
 void ihelper_default(const struct FeasPath *p)
 {
-    // oo的作用：防止constchar *类型数据直接相加出错
-    std::string oo = " ";
-    std::system(
-        ("nohup /odm/bin/irisConfig \"47 1 0\"" + oo + ">/dev/null 2>&1 &")
-            .c_str());
-    std::system(
-        ("nohup /odm/bin/irisConfig \"258 1 0\"" + oo + ">/dev/null 2>&1 &")
-            .c_str());
-
-    std::system(
-        ("nohup /odm/bin/irisConfig \"267 2 3 0\"" + oo + ">/dev/null 2>&1 &")
-            .c_str());
-    std::system(
-        ("nohup /odm/bin/irisConfig \"273 1 0\"" + oo + ">/dev/null 2>&1 &")
-            .c_str());
+    defaultConfig("47 1 0");
+    defaultConfig("258 1 0");
+    defaultConfig("267 2 3 0");
+    defaultConfig("273 1 0");
 
     Unlock_val("", "/data/system/mcd/df");
 
@@ -42,9 +38,7 @@ auto opt_on(const struct irisConfig *o, const struct FeasPath *p) -> bool
 {
     // df
     if (o->df != "") {
-        std::string oo = " ";
-        // std::string op = o->app + oo + o->df;
-        lock_val(o->app + oo + o->df, "/data/system/mcd/df");
+        lock_val(o->app + " " + o->df, "/data/system/mcd/df");
         std::system("stop mcd_init mcd_service; start mcd_init mcd_service");
     }
 
