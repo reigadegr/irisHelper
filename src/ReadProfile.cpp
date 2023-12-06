@@ -29,7 +29,7 @@ void print_struct(std::vector<irisConfig> &conf)
         printParams("perfmgr是否开启: ", tmp.perfmgr_enable, 0);
         printParams("目标fps: ", tmp.fixed_target_fps, -1);
         printParams("低功耗perfmgr: ", tmp.perfmgr_powersave, "N");
-        LOG("\n");
+        LOG("---------------------");
     }
 }
 // 删除第一列

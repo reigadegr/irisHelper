@@ -60,9 +60,10 @@ auto runThread(std::vector<irisConfig> &conf, std::string &now_package,
 
     std::thread profileMonitorThread(profileMonitor, dic, profile,
                                      std::ref(conf), std::ref(feaspath));
-    // profileMonitorThread.detach();
-    HeavyThread.join();
+    // HeavyThread.detach();
+    profileMonitorThread.detach();
 
+    HeavyThread.join();
     profileMonitorThread.join();
 
     return false;

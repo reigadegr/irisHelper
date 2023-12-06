@@ -87,14 +87,14 @@ auto profileMonitor(const char *dic, const char *profile,
                     /////////
 
                     /*
-                            if (event->mask & IN_ISDIR) {
-                                    printf("The directory %s was modified.\n",
-                                           event->name);
-                            } else {
-                                    printf("The file %s was modified.\n",
-                                           event->name);
-                            }
-                            */
+                    if (event->mask & IN_ISDIR) {
+                            printf("The directory %s was modified.\n",
+                                   event->name);
+                    } else {
+                            printf("The file %s was modified.\n",
+                                   event->name);
+                    }
+                    */
                     LOG("时间: ", printCurrentTime());
                     // printf("文件:%s 被修改辣!\n", event->name);
 

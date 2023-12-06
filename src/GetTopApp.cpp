@@ -49,14 +49,15 @@ auto getTopApp() -> std::string
         }
         f_pid >> pid;
         f_pid.close();
-
+        if (pid == "0") {
+            return getTopAppShell();
+        }
         std::ifstream app("/proc/" + pid + "/cmdline");
 
         if (!app.is_open()) {
             chmod(("/proc/" + pid + "/cmdline").c_str(), 0666);
             return getTopAppShell();
         }
-
         std::getline(app, name, '\0');
         app.close();
         return name;
@@ -64,7 +65,7 @@ auto getTopApp() -> std::string
     }
     return getTopAppShell();
 }
-
+/*
 static inline auto getTopAppShell() -> std::string
 {
     std::string name;
@@ -81,6 +82,23 @@ static inline auto getTopAppShell() -> std::string
     return name;
     // return checkSymbol(name);
 }
+*/
+
+static inline auto getTopAppShell() -> std::string
+{
+    std::string name;
+    const std::string str =
+        execCmdSync("/system/bin/dumpsys", {"activity", "lru"});
+    const auto pkgPos = str.find(" TOP") + 4;
+    name = str.substr(pkgPos, str.find('/', pkgPos) - pkgPos - 0);
+    const size_t pos = name.find(":");
+    if (pos != std::string::npos) {
+        name.erase(0, pos + 1);  // 删除冒号及其前面的内容
+    }
+    return name;
+    // return checkSymbol(name);
+}
+
 // 暂时不用
 /*
 auto checkSymbol(std::string &name) -> std::string {
