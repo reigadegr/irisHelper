@@ -86,16 +86,26 @@ static inline auto getTopAppShell() -> std::string
 
 static inline auto getTopAppShell() -> std::string
 {
-    std::string name;
-    const std::string str =
-        execCmdSync("/system/bin/dumpsys", {"activity", "lru"});
-    const auto pkgPos = str.find(" TOP") + 4;
-    name = str.substr(pkgPos, str.find('/', pkgPos) - pkgPos - 0);
-    const size_t pos = name.find(":");
-    if (pos != std::string::npos) {
+    std::string name = execCmdSync("/system/bin/dumpsys", {"activity", "lru"});
+    /*
+        name.erase(name.find('/'));
+
+            size_t pos;
+            while ((pos = name.find(':')) != std::string::npos) {
+                name.erase(0, pos + 1);
+            }
+        */
+
+    const auto pkgPos = name.find(" TOP") + 4;
+    // find第二个参数:从指定的位置开始搜索
+    name = name.substr(pkgPos, name.find('/', pkgPos) - pkgPos);
+    size_t pos;
+    if ((pos = name.find(":")) != std::string::npos) {
         name.erase(0, pos + 1);  // 删除冒号及其前面的内容
     }
+
     return name;
+
     // return checkSymbol(name);
 }
 
