@@ -41,7 +41,7 @@ auto getTopApp() -> std::string
 {
     if (Testfile("/sys/kernel/gbe/gbe2_fg_pid")) {
         std::string pid;
-        std::string name;
+
         std::ifstream f_pid("/sys/kernel/gbe/gbe2_fg_pid");
         if (!f_pid.is_open()) {
             chmod("/sys/kernel/gbe/gbe2_fg_pid", 0666);
@@ -58,6 +58,7 @@ auto getTopApp() -> std::string
             chmod(("/proc/" + pid + "/cmdline").c_str(), 0666);
             return getTopAppShell();
         }
+        std::string name;
         std::getline(app, name, '\0');
         app.close();
         return name;
