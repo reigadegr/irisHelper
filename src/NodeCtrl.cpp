@@ -24,7 +24,7 @@ void ihelper_default(const struct FeasPath *p)
     Unlock_val(-1, (p->fps).c_str());
     Unlock_val("N", (p->powersave).c_str());
 }
-static inline auto params_run(const std::string param) -> std::string
+static inline auto params_run(const std::string &param) -> std::string
 {
     if (param == "") {
         return {};

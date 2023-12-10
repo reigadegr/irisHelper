@@ -64,7 +64,7 @@ auto profileMonitor(const char *dic, const char *profile,
     struct epoll_event events[事件数量];  // 存储从内核得到的事件集合
     while (true) {
         // 等待事件发生。返回需要处理的事件数目
-        int nfds = epoll_wait(epfd, events, 事件数量, 1000);
+        int nfds = epoll_wait(epfd, events, 事件数量, 5000);
         for (int i = 0; i < nfds; ++i) {
             /**
              * epoll_wait 会一直阻塞直到下面2种情况：
