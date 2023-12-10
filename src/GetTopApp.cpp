@@ -66,37 +66,12 @@ auto getTopApp() -> std::string
     }
     return getTopAppShell();
 }
-/*
-static inline auto getTopAppShell() -> std::string
-{
-    std::string name;
-    const std::string str =
-        execCmdSync("/system/bin/dumpsys", {"window", "visible-apps"});
-
-    const auto pkgPos = str.find("package=") + 8;
-
-    name = str.substr(pkgPos, str.find(' ', pkgPos) - pkgPos - 0);
-
-    const auto first = name.find_first_not_of(' ');
-    const auto last = name.find_last_not_of(' ');
-    name = name.substr(first, last - first + 1);
-    return name;
-    // return checkSymbol(name);
-}
-*/
+// 这个方式开销较大
+// execCmdSync("/system/bin/dumpsys", {"window", "visible-apps"});
 
 static inline auto getTopAppShell() -> std::string
 {
     std::string name = execCmdSync("/system/bin/dumpsys", {"activity", "lru"});
-    /*
-        name.erase(name.find('/'));
-
-            size_t pos;
-            while ((pos = name.find(':')) != std::string::npos) {
-                name.erase(0, pos + 1);
-            }
-        */
-
     const auto pkgPos = name.find(" TOP") + 4;
     // find第二个参数:从指定的位置开始搜索
     name = name.substr(pkgPos, name.find('/', pkgPos) - pkgPos);
@@ -106,7 +81,6 @@ static inline auto getTopAppShell() -> std::string
     }
 
     return name;
-
     // return checkSymbol(name);
 }
 

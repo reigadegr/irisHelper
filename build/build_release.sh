@@ -23,6 +23,7 @@ compile_start() {
 	# this common from user : shadow3aaa
 	/data/data/com.termux/files/usr/bin/aarch64-linux-android-clang++ \
 	-flto=fill -flto-jobs=8 \
+	-L/system/lib64 -lc++ \
     -Wall -fomit-frame-pointer -std=c++23 -stdlib=libc++ -Os -flto \
     -fno-rtti -fvisibility=hidden -static-libgcc -static-libstdc++ \
     -fshort-enums -fmerge-all-constants -fno-exceptions \
