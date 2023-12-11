@@ -13,7 +13,7 @@ file_ctrl(){
 cppFile_ctrl(){
     cat $(pwd)/../src/include/*.h $(pwd)/../src/*.cpp > $(pwd)/irisHelper_all.cpp
     sed -i '/#include/d' $(pwd)/irisHelper_all.cpp
-    sed -i '/static std::mutex confMutex;/d' $(pwd)/irisHelper_all.cpp
+    #sed -i '/static std::mutex confMutex;/d' $(pwd)/irisHelper_all.cpp
     sed -i '/#pragma once/d' $(pwd)/irisHelper_all.cpp
     cat $(pwd)/patchfile/*.txt > $(pwd)/new.txt
     cat $(pwd)/irisHelper_all.cpp >> $(pwd)/new.txt

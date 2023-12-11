@@ -16,4 +16,4 @@
 #include <thread>
 #include <vector>
 
-static std::mutex confMutex;
+//static std::mutex confMutex;

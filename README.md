@@ -72,5 +72,6 @@ cd $(pwd)/irisHelper/build_speed
 sh build_speed.sh
 
 #快速编译已知bug: inotifyd无法监控配置文件
+#2023.12.11该bug已修好，目前会不会有其他bug暂不明确
 #仅用于检测项目是否可以编译通过
 ```

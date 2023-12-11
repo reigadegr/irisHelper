@@ -13,7 +13,7 @@
 #define EVENT_SIZE (sizeof(struct inotify_event))
 #define BUF_LEN (1024 * (EVENT_SIZE + 16))
 #define 事件数量 20
-static std::mutex confMutex;
+
 auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool;
 auto printCurrentTime() -> std::string;
 auto getTopApp() -> std::string;
@@ -44,6 +44,7 @@ auto profileMonitor(const char *dic, const char *profile,
                     std::vector<irisConfig> &conf, FeasPath &feaspath) -> int
 {
     pthread_setname_np(pthread_self(), "ProfileMonitor");
+    static std::mutex confMutex;
     // inotify 初始化
     int fd = inotify_init();
     int wd = inotify_add_watch(fd, dic, IN_MODIFY);

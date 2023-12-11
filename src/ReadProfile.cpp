@@ -6,7 +6,6 @@
 
 #include "include/LOG.h"
 #include "include/irisConfig.h"
-static std::mutex confMutex;
 template <typename T, typename U>
 static inline void printParams(const char *Description, const T &params,
                                const U &default_value)
@@ -64,6 +63,7 @@ static inline auto strCtrl(std::string &buf, const char *target_str,
 
 auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool
 {
+    static std::mutex confMutex;
     std::ifstream file(profile);
     if (!file.is_open()) {
         return false;
