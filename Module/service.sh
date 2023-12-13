@@ -13,7 +13,7 @@ wait_until_login() {
 wait_until_login
 initfile(){
     chattr -R -i $(dirname "$1")
-    rm -f "$1"
+    rm -rf "$1"
     [ ! -d $(dirname "$1") ] && mkdir -p $(dirname "$1")
     true > "$1"
     chmod 0755 $(dirname "$1")
@@ -26,8 +26,10 @@ init_filesystem(){
 MODDIR=${0%/*}
 FileName="irisHelper"
 
+[ ! -d "$(pwd)/log" ] && mkdir -p "$(pwd)/log"
+
 if [ -f $MODDIR/$FileName.log ]; then
-    mv -f $MODDIR/$FileName.log $MODDIR/$FileName.log.bak
+    mv -f $MODDIR/$FileName.log "$(pwd)/log/$(date).log"
 fi
 touch $MODDIR/$FileName.log
 init_filesystem
