@@ -49,9 +49,15 @@ auto getTopApp() -> std::string
         }
         f_pid >> pid;
         f_pid.close();
+
         if (pid == "0") {
             return getTopAppShell();
         }
+        /*
+        if (strcmp(pid.c_str(), "0")) {
+            return getTopAppShell();
+        }
+        */
         std::ifstream app("/proc/" + pid + "/cmdline");
 
         if (!app.is_open()) {
