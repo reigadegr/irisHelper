@@ -32,21 +32,21 @@ static inline auto execCmdSync(std::string command,
     pclose(pipe);
     return result;
 }
-
+/*
 static inline auto Testfile(const char *location)
 {
     return access(location, F_OK) == 0;
 }
+*/
 auto getTopApp() -> std::string
 {
-    if (Testfile("/sys/kernel/gbe/gbe2_fg_pid")) {
-        std::string pid;
-
+    if (std::filesystem::exists("/sys/kernel/gbe/gbe2_fg_pid")) {
         std::ifstream f_pid("/sys/kernel/gbe/gbe2_fg_pid");
         if (!f_pid.is_open()) {
             chmod("/sys/kernel/gbe/gbe2_fg_pid", 0666);
             return getTopAppShell();
         }
+        std::string pid;
         f_pid >> pid;
         f_pid.close();
 

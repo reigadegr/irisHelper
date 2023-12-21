@@ -6,7 +6,7 @@
 
 static inline void defaultConfig(const std::string &Cmd)
 {
-    std::string fullCmd =
+    const std::string fullCmd =
         "nohup /odm/bin/irisConfig \"" + Cmd + "\"" + " >/dev/null 2>&1 &";
     std::system(fullCmd.c_str());
 }
