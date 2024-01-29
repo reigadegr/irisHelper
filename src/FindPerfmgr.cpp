@@ -12,8 +12,8 @@ namespace fs = std::filesystem;
     例如：std::string perfmgrName=FindPerfmgrName("/sys/module", "perfmgr_enable", "/parameters");
 #endif
 
-auto FindPerfmgrName(const std::string &dir, const std::string &str,
-                     const std::string &reduceStr) -> std::string
+auto FindPerfmgrName(const std::string_view &dir, const std::string_view &str,
+                     const std::string_view &reduceStr) -> std::string
 {
     for (const auto &entry : fs::recursive_directory_iterator(dir)) {
         std::string const path = entry.path().string();

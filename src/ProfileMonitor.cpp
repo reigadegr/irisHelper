@@ -14,7 +14,8 @@
 #define BUF_LEN (1024 * (EVENT_SIZE + 16))
 #define 事件数量 20
 
-auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool;
+auto readProfile(std::string_view profile, std::vector<irisConfig> &conf)
+    -> bool;
 auto printCurrentTime() -> std::string;
 auto getTopApp() -> std::string;
 auto opt_on(const struct irisConfig *o, const struct FeasPath *p) -> bool;

@@ -7,7 +7,8 @@
 #include "include/Path.h"
 #include "include/irisConfig.h"
 void ihelper_default(const struct FeasPath *p);
-auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool;
+auto readProfile(std::string_view profile, std::vector<irisConfig> &conf)
+    -> bool;
 auto runThread(std::vector<irisConfig> &conf, std::string &now_package,
                const char *dic, const char *profile, FeasPath &feaspath)
     -> bool;

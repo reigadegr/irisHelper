@@ -7,13 +7,13 @@
 #include "include/LOG.h"
 #include "include/irisConfig.h"
 template <typename T, typename U>
-static inline void printParams(const char *Description, const T &params,
+static inline void printParams(std::string_view Description, const T &params,
                                const U &default_value)
 {
     if (params == default_value) {
         return;
     }
-    LOG(Description, params);
+    LOG(Description.data(), params);
 }
 void print_struct(std::vector<irisConfig> &conf)
 {
@@ -61,10 +61,11 @@ static inline auto strCtrl(std::string &buf, const char *target_str,
     return false;
 }
 
-auto readProfile(const char *profile, std::vector<irisConfig> &conf) -> bool
+auto readProfile(std::string_view profile, std::vector<irisConfig> &conf)
+    -> bool
 {
     static std::mutex confMutex;
-    std::ifstream file(profile);
+    std::ifstream file(profile.data());
     if (!file.is_open()) {
         return false;
     }
