@@ -49,7 +49,13 @@ build_targets() {
         -G "Unix Makefiles"
     /data/data/com.termux/files/usr/bin/cmake --build $BUILD_DIR/$1 --config $BUILD_TYPE --target $2 -j8
 }
-
+file_ctrl(){
+    cd $(dirname "$0")
+    chmod +x $(pwd)/build/aarch64-linux-android*/runnable/irisHelper
+    ldd $(pwd)/build/aarch64-linux-android*/runnable/irisHelper
+    strip_tool="/data/data/com.termux/files/usr/bin/aarch64-linux-android-strip"
+    $strip_tool $(pwd)/build/aarch64-linux-android*/runnable/irisHelper
+}
 
 pack_irisHelper(){
     cd $(dirname "$0")
@@ -66,6 +72,7 @@ make_irisHelper() {
     echo ">>> Making irisHelper binaries"
     format_code
     build_targets $ARM64_PREFIX "irisHelper"
+    file_ctrl
     remove_file
     pack_irisHelper >/dev/null 2>&1
 }
@@ -85,9 +92,4 @@ do_task() {
 
 #start to working
 do_task $BUILD_TASKS
-
-ldd $(pwd)/build/aarch64-linux-android*/runnable/irisHelper
-strip_tool="/data/data/com.termux/files/usr/bin/aarch64-linux-android-strip"
-$strip_tool $(pwd)/build/aarch64-linux-android*/runnable/irisHelper
-
 

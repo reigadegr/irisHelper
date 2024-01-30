@@ -1,3 +1,6 @@
+#include <spdlog/sinks/basic_file_sink.h>
+#include <spdlog/spdlog.h>
+
 #include <filesystem>
 #include <fstream>
 #include <mutex>
@@ -18,8 +21,7 @@ static inline void printParams(std::string_view Description, const T &params,
 void print_struct(std::vector<irisConfig> &conf)
 {
     for (const auto &tmp : conf) {
-        std::puts("已成功添加: ");
-        LOG("包名: ", tmp.app);
+        SPDLOG_INFO("\n已成功添加: {}", tmp.app);
         printParams("参数a: ", tmp.params_a, "");
         printParams("参数b: ", tmp.params_b, "");
         printParams("参数c: ", tmp.params_c, "");
@@ -28,8 +30,9 @@ void print_struct(std::vector<irisConfig> &conf)
         printParams("perfmgr是否开启: ", tmp.perfmgr_enable, 0);
         printParams("目标fps: ", tmp.fixed_target_fps, -1);
         printParams("低功耗perfmgr: ", tmp.perfmgr_powersave, "N");
-        std::puts("---------------------");
+        LOG("---------------------");
     }
+    SPDLOG_INFO("查询完毕");
 }
 // 删除第一列
 static inline void GetSecondArg(std::string &buf)
@@ -71,7 +74,7 @@ auto readProfile(std::string_view profile, std::vector<irisConfig> &conf)
     }
     conf.clear();
     std::string buf;
-    std::puts("加载配置文件...\n");
+    SPDLOG_INFO("加载配置文件...");
 
     std::string app = "";
     std::string params_a = "";

@@ -1,3 +1,6 @@
+#include <spdlog/sinks/basic_file_sink.h>
+#include <spdlog/spdlog.h>
+
 #include <filesystem>
 
 #include "include/LOG.h"
@@ -31,11 +34,11 @@ static auto whetherPerfmgrExists() -> std::string
 {
     // 先检测perfmgr_mtk节点
     if (!fs::exists("/sys/module/perfmgr_mtk")) {
-        std::puts("没刷YuniKernel");
+        SPDLOG_INFO("没刷YuniKernel");
         static std::string perfmgrName =
             FindPerfmgrName("/sys/module", "perfmgr_enable", "/parameters");
         if (perfmgrName == "UnSupport") {
-            std::puts("feas尊嘟不支持你的设备");
+            SPDLOG_INFO("feas尊嘟不支持你的设备");
             return "UnSupport";
         }
         return perfmgrName;

@@ -32,12 +32,26 @@ static inline void initProfile(std::string argv1)
     std::system(
         ("sed -i 's/pfmgr_pwsave/perfmgr_powersave/g' " + argv1).c_str());
 }
-
+std::string logFile;
+void InitLogger(void)
+{
+    auto logger = spdlog::default_logger();
+    if (logFile.empty() == false) {
+        auto sink =
+            std::make_shared<spdlog::sinks::basic_file_sink_mt>(logFile, false);
+        logger->sinks().emplace_back(sink);
+    }
+    // use SPDLOG_ACTIVE_LEVEL to switch log level
+    logger->set_pattern("%^[%Y年%m月%d日 %H:%M:%S] %L %v%$");
+    logger->set_level(spdlog::level::debug);
+    logger->flush_on(spdlog::level::debug);
+}
 auto main(int argc, char **argv) -> int
 {
     pthread_setname_np(pthread_self(), "MainThread");
+    InitLogger();
     if (argv[1] == nullptr) {
-        std::puts("没填写命令行参数(argv[1])？");
+        SPDLOG_ERROR("没填写命令行参数(argv[1])？");
         return 1;
     }
     initProfile(argv[1]);
@@ -47,7 +61,7 @@ auto main(int argc, char **argv) -> int
     std::vector<irisConfig> conf;
 
     if (!readProfile(argv[1], conf)) {
-        std::puts("文件都打不开，命令行参数(argv[1])填对了么？");
+        SPDLOG_INFO("文件都打不开，命令行参数(argv[1])填对了么？");
         return 2;
     }
 
@@ -55,5 +69,5 @@ auto main(int argc, char **argv) -> int
     std::string now_package = "";
     SPDLOG_INFO("IrisHelper is running");
     runThread(conf, now_package, (dirname(argv[1])).c_str(), argv[1], feaspath);
-    SPDLOG_INFO("Terminated by user");
+    SPDLOG_ERROR("Terminated by user");
 }

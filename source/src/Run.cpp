@@ -1,3 +1,6 @@
+#include <spdlog/sinks/basic_file_sink.h>
+#include <spdlog/spdlog.h>
+
 #include <thread>
 #include <vector>
 
@@ -24,18 +27,20 @@ static inline auto RunMain(std::vector<irisConfig> &conf,
 
     now_package = TopApp;
 
-    LOG("时间: ", printCurrentTime());
+    // LOG("时间: ", printCurrentTime());
     // 打印包名
     for (const auto &game : conf) {
         if (TopApp.find(game.app) != std::string::npos) {
-            LOG("检测到列表应用:   ", game.app, "\n");
+            // LOG("检测到列表应用:   ", game.app, "\n");
+            SPDLOG_INFO("检测到列表应用: {}\n", game.app);
             // LOG(game);
             opt_on(&game, &feaspath);
             return true;
         }
     }
 
-    LOG("检测到非列表应用: ", TopApp, "\n");
+    // LOG("检测到非列表应用: ", TopApp, "\n");
+    SPDLOG_INFO("检测到非列表应用: {}\n", TopApp);
     ihelper_default(&feaspath);
     return true;
 }

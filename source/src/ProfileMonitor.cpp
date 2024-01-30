@@ -1,5 +1,7 @@
 #include <errno.h>
 #include <fcntl.h>
+#include <spdlog/sinks/basic_file_sink.h>
+#include <spdlog/spdlog.h>
 #include <sys/epoll.h>
 #include <sys/inotify.h>
 #include <unistd.h>
@@ -30,13 +32,12 @@ static inline auto forceReload(std::vector<irisConfig> &conf,
     //  打印包名
     for (const auto &game : conf) {
         if (TopApp.find(game.app) != std::string::npos) {
-            LOG("检测到列表应用:   ", game.app, "\n");
+            SPDLOG_INFO("检测到列表应用: {}\n", game.app);
             opt_on(&game, &feaspath);
             return true;
         }
     }
-
-    LOG("检测到非列表应用: ", TopApp, "\n");
+    SPDLOG_INFO("检测到非列表应用: {}\n", TopApp);
     ihelper_default(&feaspath);
     return true;
 }
@@ -97,7 +98,8 @@ auto profileMonitor(const char *dic, const char *profile,
                                    event->name);
                     }
                     */
-                    LOG("时间: ", printCurrentTime());
+                    // LOG("时间: ", printCurrentTime());
+                    SPDLOG_INFO("文件被修改辣!\n");
                     // printf("文件:%s 被修改辣!\n", event->name);
 
                     std::this_thread::sleep_for(
@@ -106,7 +108,7 @@ auto profileMonitor(const char *dic, const char *profile,
                         std::lock_guard<std::mutex> lock(confMutex);
                         readProfile(profile, conf);
                     }
-                    LOG("强制重载中..");
+                    SPDLOG_INFO("强制重载中..");
                     forceReload(conf, feaspath);
 
                     //////
