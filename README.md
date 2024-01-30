@@ -2,6 +2,7 @@
 ## **简介**
      适用于搭载Pixelworks X7的设备 
      插帧、HDR、超分参数自定义工具
+     cmake分支: 使用yc9559的dfps项目cmake相关方法进行构建！特此感谢
 
 # 功能
 * 读取包名，根据配置文件参数对/odm/bin/irisConfig进行设置
