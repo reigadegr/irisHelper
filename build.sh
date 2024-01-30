@@ -50,11 +50,24 @@ build_targets() {
     /data/data/com.termux/files/usr/bin/cmake --build $BUILD_DIR/$1 --config $BUILD_TYPE --target $2 -j8
 }
 
+
+pack_irisHelper(){
+    cd $(dirname "$0")
+    [ ! -d $(pwd)/output ] && mkdir -p $(pwd)/output
+    cp -af $(pwd)/build/aarch64-linux-android*/runnable/irisHelper $(pwd)/magisk/irisHelper
+    
+    cd $(dirname "$0")/magisk
+    zip_tool="/data/data/com.termux/files/usr/bin/zip"
+    rm -rf $(dirname "$0")/output/*
+    $zip_tool -9 -rq "$(dirname "$0")/output/irisHelper.zip"  .
+}
+
 make_irisHelper() {
     echo ">>> Making irisHelper binaries"
     format_code
     build_targets $ARM64_PREFIX "irisHelper"
     remove_file
+    pack_irisHelper >/dev/null 2>&1
 }
 
 # $1:task
@@ -78,11 +91,3 @@ strip_tool="/data/data/com.termux/files/usr/bin/aarch64-linux-android-strip"
 $strip_tool $(pwd)/build/aarch64-linux-android*/runnable/irisHelper
 
 
-cd $(dirname "$0")
-[ ! -d $(pwd)/output ] && mkdir -p $(pwd)/output
-cp -af $(pwd)/build/aarch64-linux-android*/runnable/irisHelper $(pwd)/magisk/irisHelper
-
-cd $(dirname "$0")/magisk
-zip_tool="/data/data/com.termux/files/usr/bin/zip"
-rm -rf $(dirname "$0")/output/*
-$zip_tool -9 -rq "$(dirname "$0")/output/irisHelper.zip"  .
