@@ -4,8 +4,6 @@
 #include <iostream>
 #include <thread>
 #include <vector>
-
-#include "absl/strings/str_cat.h"
 #include "include/LockValue.h"
 #include "include/Path.h"
 #include "include/irisConfig.h"
@@ -36,8 +34,6 @@ static inline void initProfile(std::string argv1)
 
 auto main(int argc, char **argv) -> int
 {
-    std::string s = absl::StrCat("Hello, ", "world!");
-    // std::cout << s;
     pthread_setname_np(pthread_self(), "MainThread");
     if (argv[1] == nullptr) {
         std::puts("没填写命令行参数(argv[1])？");
