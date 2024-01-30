@@ -36,7 +36,7 @@ static inline void initProfile(std::string argv1)
 
 auto main(int argc, char **argv) -> int
 {
-    // std::string s = absl::StrCat("Hello, ", "world!");
+    std::string s = absl::StrCat("Hello, ", "world!");
     // std::cout << s;
     pthread_setname_np(pthread_self(), "MainThread");
     if (argv[1] == nullptr) {
