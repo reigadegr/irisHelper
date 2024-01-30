@@ -1,6 +1,6 @@
 #!/bin/sh
 
-rm -rf $(dirname "$0")/*.bak
+rm -rf $(find $(pwd) -name "*.bak")
 
 #通用推送模板
 git gc --prune=all
