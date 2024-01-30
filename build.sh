@@ -21,7 +21,7 @@ set -e
 BASEDIR="$(dirname $(readlink -f "$0"))"
 BUILD_DIR="$BASEDIR/build"
 BUILD_TYPE="Release"
-BUILD_TASKS="$1"
+BUILD_TASKS="make"
 ARM64_PREFIX=aarch64-linux-android
 C_COMPILER="/data/data/com.termux/files/usr/bin/aarch64-linux-android-clang"
 CXX_COMPILER="/data/data/com.termux/files/usr/bin/aarch64-linux-android-clang++"
@@ -40,14 +40,14 @@ format_code() {
 # $1:prefix $2:targets
 build_targets() {
     mkdir -p $BUILD_DIR/$1
-    cmake \
+    /data/data/com.termux/files/usr/bin/cmake \
         -DCMAKE_BUILD_TYPE=$BUILD_TYPE \
         -DCMAKE_C_COMPILER=$C_COMPILER \
         -DCMAKE_CXX_COMPILER=$CXX_COMPILER \
         -H$BASEDIR \
         -B$BUILD_DIR/$1 \
         -G "Unix Makefiles"
-    cmake --build $BUILD_DIR/$1 --config $BUILD_TYPE --target $2 -j8
+    /data/data/com.termux/files/usr/bin/cmake --build $BUILD_DIR/$1 --config $BUILD_TYPE --target $2 -j8
 }
 
 make_irisHelper() {
@@ -76,3 +76,13 @@ do_task $BUILD_TASKS
 ldd $(pwd)/build/aarch64-linux-android*/runnable/irisHelper
 strip_tool="/data/data/com.termux/files/usr/bin/aarch64-linux-android-strip"
 $strip_tool $(pwd)/build/aarch64-linux-android*/runnable/irisHelper
+
+
+cd $(dirname "$0")
+[ ! -d $(pwd)/output ] && mkdir -p $(pwd)/output
+cp -af $(pwd)/build/aarch64-linux-android*/runnable/irisHelper $(pwd)/magisk/irisHelper
+
+cd $(dirname "$0")/magisk
+zip_tool="/data/data/com.termux/files/usr/bin/zip"
+rm -rf $(dirname "$0")/output/*
+$zip_tool -9 -rq "$(dirname "$0")/output/irisHelper.zip"  .

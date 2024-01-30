@@ -1,3 +1,6 @@
 __pycache__
 /.vscode
 /build
+/magisk/irisHelper
+output
+*.bak

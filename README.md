@@ -58,21 +58,11 @@
 ## 编译
 ```bash
 #环境构建(termux)
-pkg install clang -y && pkg add ndk-multilib -y
+pkg install clang make cmake -y && pkg add ndk-multilib -y
 #clone项目
-git clone https://github.com/reigadegr/irisHelper --depth 1
+git clone https://github.com/reigadegr/irisHelper --depth 1 -b cmake
 
-#1，传统方法编译
-cd $(pwd)/irisHelper/build
-sh build_release.sh
+sh build.sh
 
-#编译完成后，可以去模块根目录的output文件夹获取模块
 
-#2，快速编译
-cd $(pwd)/irisHelper/build_speed
-sh build_speed.sh
-
-#快速编译已知bug: inotifyd无法监控配置文件
-#2023.12.11该bug已修好，目前会不会有其他bug暂不明确
-#仅用于检测项目是否可以编译通过
 ```
