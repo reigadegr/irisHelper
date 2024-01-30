@@ -6,4 +6,4 @@ rm -rf $(dirname "$0")/*.bak
 git gc --prune=all
 git add .
 git commit -m "$1"
-git push -f origin main
+git push -f origin cmake
