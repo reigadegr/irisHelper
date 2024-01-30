@@ -49,8 +49,9 @@ void InitLogger(void)
 auto main(int argc, char **argv) -> int
 {
     pthread_setname_np(pthread_self(), "MainThread");
+
     InitLogger();
-    if (argv[1] == nullptr) {
+    if (argv[1] == nullptr) [[unlikely]] {
         SPDLOG_ERROR("没填写命令行参数(argv[1])？");
         return 1;
     }
@@ -60,7 +61,7 @@ auto main(int argc, char **argv) -> int
     ihelper_default(&feaspath);
     std::vector<irisConfig> conf;
 
-    if (!readProfile(argv[1], conf)) {
+    if (!readProfile(argv[1], conf)) [[unlikely]] {
         SPDLOG_INFO("文件都打不开，命令行参数(argv[1])填对了么？");
         return 2;
     }

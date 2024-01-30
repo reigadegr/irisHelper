@@ -79,7 +79,7 @@ auto profileMonitor(const char *dic, const char *profile,
                 continue;
             }
             int length = read(fd, buffer, BUF_LEN);
-            if (length < 0) {
+            if (length < 0) [[unlikely]] {
                 perror("read");
             }
             int pos = 0;

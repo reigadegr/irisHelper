@@ -21,7 +21,7 @@ static inline auto RunMain(std::vector<irisConfig> &conf,
     std::string const TopApp = getTopApp();
 
     // 包名与上次相同则直接返回
-    if (TopApp == now_package) {
+    if (TopApp == now_package) [[likely]] {
         return true;
     }
 
