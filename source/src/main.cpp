@@ -1,3 +1,6 @@
+#include <spdlog/sinks/basic_file_sink.h>
+#include <spdlog/spdlog.h>
+
 #include <iostream>
 #include <thread>
 #include <vector>
@@ -6,8 +9,6 @@
 #include "include/LockValue.h"
 #include "include/Path.h"
 #include "include/irisConfig.h"
-#include "spdlog/sinks/basic_file_sink.h"
-#include "spdlog/spdlog.h"
 void ihelper_default(const struct FeasPath *p);
 auto readProfile(std::string_view profile, std::vector<irisConfig> &conf)
     -> bool;
@@ -57,4 +58,5 @@ auto main(int argc, char **argv) -> int
     std::string now_package = "";
     SPDLOG_INFO("IrisHelper is running");
     runThread(conf, now_package, (dirname(argv[1])).c_str(), argv[1], feaspath);
+    SPDLOG_INFO("Terminated by user");
 }
