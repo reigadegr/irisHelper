@@ -10,22 +10,15 @@
     例如：std::string TopApp = getTopApp();
 #endif
 static inline auto getTopAppShell() -> std::string;
-static inline auto execCmdSync(std::string command,
-                               const std::vector<std::string> &args)
-    -> std::string
+static inline auto execCmdSync(const char *command) -> std::string
 {
-    // 将命令和参数拼接为一个字符串
-    for (const auto &arg : args) {
-        command += " ";
-        command += arg;
-    }
     // 执行命令并获取输出
-    FILE *pipe = popen(command.c_str(), "r");
-    if (pipe == nullptr) {
+    FILE *pipe = popen(command, "r");
+    if (pipe == nullptr) [[unlikely]] {
         return {};
     }
     char buffer[2];
-    std::string result;
+    std::string result = "";
     while (fgets(buffer, sizeof(buffer), pipe) != nullptr) {
         result += buffer;
     }
@@ -40,49 +33,45 @@ static inline auto Testfile(const char *location)
 */
 auto getTopApp() -> std::string
 {
-    if (std::filesystem::exists("/sys/kernel/gbe/gbe2_fg_pid")) {
-        std::ifstream f_pid("/sys/kernel/gbe/gbe2_fg_pid");
-        if (!f_pid.is_open()) {
-            chmod("/sys/kernel/gbe/gbe2_fg_pid", 0666);
-            return getTopAppShell();
-        }
-        std::string pid;
-        f_pid >> pid;
-        f_pid.close();
-
-        if (pid == "0") {
-            return getTopAppShell();
-        }
-        /*
-        if (strcmp(pid.c_str(), "0")) {
-            return getTopAppShell();
-        }
-        */
-        std::ifstream app("/proc/" + pid + "/cmdline");
-
-        if (!app.is_open()) {
-            chmod(("/proc/" + pid + "/cmdline").c_str(), 0666);
-            return getTopAppShell();
-        }
-        std::string name;
-        std::getline(app, name, '\0');
-        app.close();
-        return name;
-        //  return checkSymbol(name);
+    if (!std::filesystem::exists("/sys/kernel/gbe/gbe2_fg_pid")) {
+        return getTopAppShell();
     }
-    return getTopAppShell();
+    std::ifstream f_pid("/sys/kernel/gbe/gbe2_fg_pid");
+    if (!f_pid.is_open()) [[unlikely]] {
+        chmod("/sys/kernel/gbe/gbe2_fg_pid", 0666);
+        return getTopAppShell();
+    }
+    std::string pid;
+    f_pid >> pid;
+    f_pid.close();
+
+    if (pid == "0") [[unlikely]] {
+        return getTopAppShell();
+    }
+
+    std::ifstream app("/proc/" + pid + "/cmdline");
+
+    if (!app.is_open()) [[unlikely]] {
+        chmod(("/proc/" + pid + "/cmdline").c_str(), 0666);
+        return getTopAppShell();
+    }
+    std::string name;
+    std::getline(app, name, '\0');
+    app.close();
+    return name;
+    //  return checkSymbol(name);
 }
 // 这个方式开销较大
 // execCmdSync("/system/bin/dumpsys", {"window", "visible-apps"});
 
 static inline auto getTopAppShell() -> std::string
 {
-    std::string name = execCmdSync("/system/bin/dumpsys", {"activity", "lru"});
+    std::string name = execCmdSync("/system/bin/dumpsys activity lru");
     const auto pkgPos = name.find(" TOP") + 4;
     // find第二个参数:从指定的位置开始搜索
     name = name.substr(pkgPos, name.find('/', pkgPos) - pkgPos);
     size_t pos;
-    if ((pos = name.find(":")) != std::string::npos) {
+    if ((pos = name.find(":")) != std::string::npos) [[likely]] {
         name.erase(0, pos + 1);  // 删除冒号及其前面的内容
     }
 

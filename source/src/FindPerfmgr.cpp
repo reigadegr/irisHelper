@@ -48,7 +48,7 @@ static auto whetherPerfmgrExists() -> std::string
 void initFeasPath(struct FeasPath *p)
 {
     std::string perfmgrName = whetherPerfmgrExists();
-    if (perfmgrName == "UnSupport") {
+    if (perfmgrName == "UnSupport") [[unlikely]] {
         p->enable = "";
         p->fps = "";
         return;

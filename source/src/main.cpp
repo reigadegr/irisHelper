@@ -42,7 +42,7 @@ void InitLogger(void)
         logger->sinks().emplace_back(sink);
     }
     // use SPDLOG_ACTIVE_LEVEL to switch log level
-    logger->set_pattern("%^[%Y年%m月%d日 %H:%M:%S] %L %v%$");
+    logger->set_pattern("%^[%Y年%m月%d日 %H:%M:%S] [%L] %v%$");
     logger->set_level(spdlog::level::debug);
     logger->flush_on(spdlog::level::debug);
 }
@@ -62,7 +62,7 @@ auto main(int argc, char **argv) -> int
     std::vector<irisConfig> conf;
 
     if (!readProfile(argv[1], conf)) [[unlikely]] {
-        SPDLOG_INFO("文件都打不开，命令行参数(argv[1])填对了么？");
+        SPDLOG_ERROR("文件都打不开，命令行参数(argv[1])填对了么？");
         return 2;
     }
 
