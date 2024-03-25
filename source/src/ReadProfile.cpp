@@ -13,7 +13,7 @@ template <typename T, typename U>
 static inline void printParams(std::string_view Description, const T &params,
                                const U &default_value)
 {
-    if (params == default_value) {
+    if (params == default_value) [[unlikely]] {
         return;
     }
     LOG(Description.data(), params);
@@ -69,7 +69,7 @@ auto readProfile(std::string_view profile, std::vector<irisConfig> &conf)
 {
     static std::mutex confMutex;
     std::ifstream file(profile.data());
-    if (!file.is_open()) {
+    if (!file.is_open()) [[unlikely]] {
         return false;
     }
     conf.clear();

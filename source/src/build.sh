@@ -5,7 +5,7 @@ if [ "$(basename $(dirname "$0"))" == "src" ]; then
 else
     FileName=$(basename $(dirname "$0"))
 fi
-# FileName=exploreMali
+FileName=irisHelper
 remove_file(){
     rm -rf $(pwd)/*.bak $(pwd)/include/*.bak $(pwd)/config/*.bak $(dirname "$0")/*.bak
 }
