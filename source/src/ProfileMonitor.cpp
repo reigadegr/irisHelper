@@ -26,18 +26,18 @@ static inline auto forceReload(std::vector<irisConfig> &conf,
                                FeasPath &feaspath) -> bool
 {
     // 获取TopApp name
-    std::string const TopApp = getTopApp();
+    const auto TopApp = std::make_unique<std::string>(getTopApp());
 
     // LOG("时间: ", printCurrentTime());
     //  打印包名
     for (const auto &game : conf) {
-        if (TopApp.find(game.app) != std::string::npos) {
+        if (TopApp->find(game.app) != std::string::npos) {
             SPDLOG_INFO("检测到列表应用: {}\n", game.app);
             opt_on(&game, &feaspath);
             return true;
         }
     }
-    SPDLOG_INFO("检测到非列表应用: {}\n", TopApp);
+    SPDLOG_INFO("检测到非列表应用: {}\n", *TopApp);
     ihelper_default(&feaspath);
     return true;
 }

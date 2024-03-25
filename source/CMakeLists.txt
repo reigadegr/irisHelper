@@ -18,7 +18,7 @@ set(INCS
 )
 
 add_executable(irisHelper ${SRCS})
-target_link_libraries(irisHelper PRIVATE boost spdlog scn)
+target_link_libraries(irisHelper PRIVATE spdlog)
 
 set(THIS_COMPILE_FLAGS
     -Wall -Werror -fdata-sections -ffunction-sections -fno-threadsafe-statics -fno-omit-frame-pointer -fno-rtti -fomit-frame-pointer -Os -flto -fvisibility=hidden -fshort-enums -fmerge-all-constants -Bsymbolic -fdata-sections -ffunction-sections -fno-stack-protector -falign-functions -finline-functions

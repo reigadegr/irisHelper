@@ -1,6 +1,7 @@
 #include <spdlog/sinks/basic_file_sink.h>
 #include <spdlog/spdlog.h>
 
+#include <algorithm>
 #include <thread>
 #include <vector>
 
@@ -14,23 +15,27 @@ auto opt_on(const struct irisConfig *o, const struct FeasPath *p) -> bool;
 void ihelper_default(const struct FeasPath *p);
 auto profileMonitor(const char *dic, const char *profile,
                     std::vector<irisConfig> &conf, FeasPath &feaspath) -> int;
+auto runThread(std::vector<irisConfig> &conf, std::string &now_package,
+               const char *dic, const char *profile, FeasPath &feaspath)
+    -> bool;
 static inline auto RunMain(std::vector<irisConfig> &conf,
                            std::string &now_package, FeasPath &feaspath) -> bool
 {
     // 获取TopApp name
-    std::string const TopApp = getTopApp();
-
+    // std::string const TopApp = getTopApp();
+    const auto TopApp = std::make_unique<std::string>(getTopApp());
     // 包名与上次相同则直接返回
-    if (TopApp == now_package) [[likely]] {
+    if (*TopApp == now_package) [[likely]] {
         return true;
     }
 
-    now_package = TopApp;
+    now_package = std::move(*TopApp);
 
     // LOG("时间: ", printCurrentTime());
     // 打印包名
+
     for (const auto &game : conf) {
-        if (TopApp.find(game.app) != std::string::npos) {
+        if (now_package.find(game.app) != std::string::npos) {
             // LOG("检测到列表应用:   ", game.app, "\n");
             SPDLOG_INFO("检测到列表应用: {}\n", game.app);
             // LOG(game);
@@ -38,11 +43,22 @@ static inline auto RunMain(std::vector<irisConfig> &conf,
             return true;
         }
     }
-
     // LOG("检测到非列表应用: ", TopApp, "\n");
-    SPDLOG_INFO("检测到非列表应用: {}\n", TopApp);
+    SPDLOG_INFO("检测到非列表应用: {}\n", now_package);
     ihelper_default(&feaspath);
     return true;
+    /*
+        std::ranges::for_each(conf, [&](auto &game) {
+            if (now_package.find(game.app) != std::string::npos) {
+                // LOG("检测到列表应用:   ", game.app, "\n");
+                SPDLOG_INFO("检测到列表应用: {}\n", game.app);
+                // LOG(game);
+                opt_on(&game, &feaspath);
+                return true;
+            }
+
+        });
+        */
 }
 
 static inline auto RunStart(std::vector<irisConfig> &conf,
@@ -66,7 +82,7 @@ auto runThread(std::vector<irisConfig> &conf, std::string &now_package,
     std::thread profileMonitorThread(profileMonitor, dic, profile,
                                      std::ref(conf), std::ref(feaspath));
     // HeavyThread.detach();
-    profileMonitorThread.detach();
+    // profileMonitorThread.detach();
 
     HeavyThread.join();
     profileMonitorThread.join();

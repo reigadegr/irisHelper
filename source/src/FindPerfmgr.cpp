@@ -38,7 +38,7 @@ static auto whetherPerfmgrExists() -> std::string
         static std::string perfmgrName =
             FindPerfmgrName("/sys/module", "perfmgr_enable", "/parameters");
         if (perfmgrName == "UnSupport") {
-            SPDLOG_INFO("feas尊嘟不支持你的设备");
+            SPDLOG_INFO("FEAS尊嘟不支持你的设备");
             return "UnSupport";
         }
         return perfmgrName;

@@ -32,7 +32,7 @@ static inline void initProfile(std::string argv1)
     std::system(
         ("sed -i 's/pfmgr_pwsave/perfmgr_powersave/g' " + argv1).c_str());
 }
-std::string logFile;
+std::string logFile = "";
 void InitLogger(void)
 {
     auto logger = spdlog::default_logger();
@@ -43,8 +43,6 @@ void InitLogger(void)
     }
     // use SPDLOG_ACTIVE_LEVEL to switch log level
     logger->set_pattern("%^[%Y年%m月%d日 %H:%M:%S] [%L] %v%$");
-    logger->set_level(spdlog::level::debug);
-    logger->flush_on(spdlog::level::debug);
 }
 auto main(int argc, char **argv) -> int
 {

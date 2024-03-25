@@ -31,14 +31,15 @@ static inline auto Testfile(const char *location)
     return access(location, F_OK) == 0;
 }
 */
+constexpr char TopAppPid[] = "/sys/kernel/gbe/gbe2_fg_pid";
 auto getTopApp() -> std::string
 {
-    if (!std::filesystem::exists("/sys/kernel/gbe/gbe2_fg_pid")) {
+    if (!std::filesystem::exists(TopAppPid)) {
         return getTopAppShell();
     }
-    std::ifstream f_pid("/sys/kernel/gbe/gbe2_fg_pid");
+    std::ifstream f_pid(TopAppPid);
     if (!f_pid.is_open()) [[unlikely]] {
-        chmod("/sys/kernel/gbe/gbe2_fg_pid", 0666);
+        chmod(TopAppPid, 0666);
         return getTopAppShell();
     }
     std::string pid;
