@@ -67,6 +67,7 @@ auto main(int argc, char **argv) -> int
     // 记录当前包名
     std::string now_package = "";
     SPDLOG_INFO("IrisHelper is running");
-    runThread(conf, now_package, (dirname(argv[1])).c_str(), argv[1], feaspath);
+    runThread(conf, now_package, (dirname(argv[1])).c_str(), std::move(argv[1]),
+              feaspath);
     SPDLOG_ERROR("Terminated by user");
 }

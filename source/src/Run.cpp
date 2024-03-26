@@ -35,7 +35,8 @@ static inline auto RunMain(std::vector<irisConfig> &conf,
     // 打印包名
 
     for (const auto &game : conf) {
-        if (now_package.find(game.app) != std::string::npos) {
+        if (game.app.find(now_package) != std::string::npos) {
+            // if (now_package.find(game.app) != std::string::npos) {
             // LOG("检测到列表应用:   ", game.app, "\n");
             SPDLOG_INFO("检测到列表应用: {}\n", game.app);
             // LOG(game);
